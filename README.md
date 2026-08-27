@@ -1,4 +1,4 @@
-# ⚡ WAPP Power Data Pipeline & Analytics Portfolio
+# ⚡ WAPP Power Data Pipeline, Big Data & Analytics Portfolio
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io)
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
@@ -10,22 +10,22 @@
 
 ---
 
-## 🎯 Aperçu du Portfolio
+## 🎯 Aperçu du Portfolio (7 Projets Avancés)
 
-Ce dépôt contient la suite complète des **4 projets pratiques d'ingénierie et d'analyse de données électriques**, développés sur des sources Open Data 100% gratuites pour répondre aux exigences exactes du Terme de Référence (TDR) du WAPP :
+Ce dépôt contient la suite complète des **7 projets complexes d'ingénierie, de Big Data et d'analyse de données électriques**, développés sur des sources Open Data 100% gratuites pour répondre aux exigences du Terme de Référence (TDR) du WAPP :
 
 ```text
                                   +-------------------------------------------------+
                                   |     WAPP DATA PIPELINE & ANALYTICS PORTAL       |
                                   +-------------------------------------------------+
                                                            |
-           +-----------------------+-----------------------+-----------------------+-----------------------+
-           |                       |                       |                       |                       |
-           v                       v                       v                       v                       v
-+-----------------------+ +-----------------------+ +-----------------------+ +-----------------------+ +-----------------------+
-|  Projet 1 : RTE API   | | Projet 2 : Quality DQ | |  Projet 3 : ML Load   | | Projet 4 : PySpark    | |   Streamlit Portal    |
-| Ingestion & Dashboard | | Audit GRT & WB Data | | Forecasting (40k)   | | Big Data & Hive SQL   | |    Cloud Interactive  |
-+-----------------------+ +-----------------------+ +-----------------------+ +-----------------------+ +-----------------------+
+           +-------------------+-------------------+-------+-------+-------------------+-------------------+
+           |                   |                   |               |                   |                   |
+           v                   v                   v               v                   v                   v
++-------------------+ +-------------------+ +-------------------+ +-------------------+ +-------------------+ +-------------------+
+| Projet 1 : RTE    | | Projet 2 : Quality| | Projet 3 : ML     | | Projet 4 : PySpark| | Projet 5 : NASA   | | Projet 6 : PMU    |
+| API Ingestion     | | Audit GRT & WB    | | Load Forecasting  | | Big Data / Hive   | | Satellite & BME   | | Realtime Streaming|
++-------------------+ +-------------------+ +-------------------+ +-------------------+ +-------------------+ +-------------------+
 ```
 
 ---
@@ -38,85 +38,58 @@ wapp-power-data-pipeline/
 ├── README.md                      <-- Documentation & Architecture
 ├── requirements.txt               <-- Dépendances Python pour le Cloud
 ├── .gitignore                     <-- Exclusion Git
-├── streamlit_app.py               <-- Portail Multi-Projets Principal Streamlit
+├── streamlit_app.py               <-- Portail Multi-Projets Principal (7 Projets)
 │
-├── projet1_rte_api/
-│   ├── fetch_data.py              <-- Script d'extraction ETL vers SQLite
-│   └── app_rte.py                 <-- Dashboard Temps Réel API RTE éCO2mix
-│
-├── projet2_data_governance/
-│   ├── quality_wapp.py            <-- Moteur de contrôle qualité GRT (Tension/Fréquence)
-│   └── data_governance_app.py     <-- Dashboard Qualité & Données Banque Mondiale CEDEAO
-│
-├── projet3_ml_load_forecasting/
-│   ├── generate_sample_panama_data.py <-- Générateur de séries temporelles (40 000+ relevés)
-│   ├── train_ml_forecast.py       <-- Script d'entraînement Machine Learning (Random Forest)
-│   └── ml_forecasting_app.py      <-- Interface de simulation des prévisions de charge
-│
-└── projet4_pyspark_bigdata/
-    ├── docker-compose.yml         <-- Configuration Cluster Bitnami PySpark & Hive Metastore
-    ├── spark_pipeline.py          <-- Pipeline d'agrégation distribuée PySpark & Hive SQL
-    └── pyspark_app.py             <-- Visualisation & Benchmarks de performance Big Data
+├── projet1_rte_api/               <-- Ingestion API RTE éCO2mix (Données Temps Réel)
+├── projet2_data_governance/       <-- Moteur Qualité GRT & Données Banque Mondiale (CEDEAO)
+├── projet3_ml_load_forecasting/   <-- Machine Learning Prévision de Charge (Panama 40k)
+├── projet4_pyspark_bigdata/       <-- Big Data PySpark 3.5 & Hive SQL (UCI 321 clients)
+├── projet5_geospatial_solar/      <-- API NASA POWER Satellite & Géostatistique (BME/Krigeage)
+├── projet6_streaming_pyspark/     <-- PySpark Structured Streaming & SCADA/PMU 50 Hz
+└── projet7_market_nodal_pricing/  <-- Marché Régional WAPP & Nodal Marginal Pricing (LMP)
 ```
 
 ---
 
-## ⚡ Description Détaillée des 4 Projets
+## ⚡ Description Détaillée des 7 Projets
 
-### 1. Projet 1 — Pipeline API Données Électriques (RTE éCO2mix) & Dashboard
-- **Source** : API Publique REST RTE éCO2mix (Open Data Réseaux Énergies - sans clé API).
-- **Stack** : Python, Requests, Pandas, SQLite, Streamlit, Plotly.
-- **Fonctionnalités** : Ingestion en temps réel des données de consommation et de production par filière (Solaire, Éolien, Hydraulique, Nucléaire, Gaz), calcul de la part EnR % et jauge réactive.
+### 1. Projet 1 — Pipeline API RTE éCO2mix & Dashboard Temps Réel
+- Ingestion sans clé de l'API REST RTE (JSON). Stockage SQLite et visuels Plotly du mix électrique.
 
 ### 2. Projet 2 — Gouvernance, Qualité de Données & Analytics Afrique (WAPP / CEDEAO)
-- **Source** : Données de télémesure GRT (Bénin SBEE, Côte d'Ivoire CIE, Nigeria TCN, Ghana GRIDCo) + World Bank Open Data.
-- **Stack** : Python, Data Quality Metrics Engine, Plotly, Streamlit.
-- **Fonctionnalités** : Audit de complétude %, détection d'anomalies de tension ($161\text{ kV} \pm 10\%$) et de fréquence ($50\text{ Hz} \pm 0.5\text{ Hz}$), cartographie d'accès à l'électricité et des pertes réseau en Afrique de l'Ouest.
+- Audit de complétude % des GRT (Bénin, Côte d'Ivoire, Nigeria, Ghana) et indicateurs Banque Mondiale.
 
 ### 3. Projet 3 — Machine Learning Load Forecasting (Panama - 40 000+ Relevés)
-- **Source** : Kaggle Panama Electricity Load Dataset (2 ans d'historique horaire).
-- **Stack** : Scikit-Learn, Pandas, Plotly, Streamlit.
-- **Fonctionnalités** : Extraction de features temporelles et lags ($1\text{h}$, $24\text{h}$, $168\text{h}$), prévision de la pointe de charge avec métriques **RMSE** (43.03 MW), **MAE** (34.39 MW) et **MAPE** (3.22%).
+- Modélisation de la pointe de charge avec Random Forest (RMSE: 43.03 MW, MAE: 34.39 MW, MAPE: 3.22%).
 
 ### 4. Projet 4 — Mini Pipeline Big Data Distributed Processing (PySpark & Hive SQL)
-- **Source** : UCI ML Repository - ElectricityLoadDiagrams (321 compteurs x 3 ans à 15-min).
-- **Stack** : PySpark 3.5, Hive SQL, Docker Compose (`bitnami/spark`).
-- **Fonctionnalités** : Traitement distribué multi-cœurs évitant les limites RAM de Pandas, requêtes Hive SQL d'agrégation de charge par heure et benchmark de performance.
+- Traitement distribué sous **PySpark 3.5** et requêtes **Hive SQL** sur cluster Docker Bitnami.
+
+### 5. Projet 5 — Ingestion Géospatiale Satellite (NASA POWER API) & Géostatistique
+- Ingestion satellite GHI, variogramme expérimental $\gamma(h)$ et interpolation par **Krigeage/IDW** (Rapprochement direct avec la thèse d'ingénieur ENSGMM de Christophe WAVOEKE).
+
+### 6. Projet 6 — Real-Time Streaming & SCADA/PMU (PySpark Structured Streaming)
+- Traitement en streaming des signaux PMU (50 Hz), fenêtres glissantes et détection des chutes de fréquence (< 49.5 Hz).
+
+### 7. Projet 7 — Marché Régional WAPP & Locational Marginal Pricing (LMP $/MWh)
+- Optimisation de l'Economic Dispatch (OPF) du marché régional d'électricité CEDEAO et calcul des prix marginaux nodiaux.
 
 ---
 
-## 🚀 Guide d'Exécution Locale
+## 🚀 Exécution Locale
 
-1. **Cloner le dépôt** :
-   ```bash
-   git clone https://github.com/christopher-wavoeke/wapp-power-data-pipeline.git
-   cd wapp-power-data-pipeline
-   ```
-
-2. **Installer les dépendances** :
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Lancer le portail Streamlit** :
-   ```bash
-   streamlit run streamlit_app.py
-   ```
+```bash
+git clone https://github.com/christopher-wavoeke/wapp-power-data-pipeline.git
+cd wapp-power-data-pipeline
+pip install -r requirements.txt
+python -m streamlit run streamlit_app.py
+```
 
 ---
 
-## 🌐 Déploiement sur Streamlit Community Cloud
+## ✉️ Contact & Links
 
-1. Rendez-vous sur [share.streamlit.io](https://share.streamlit.io) et connectez-vous avec votre compte GitHub (**christopher-wavoeke** / `christophewavoeke18@gmail.com`).
-2. Cliquez sur **"New App"**.
-3. Sélectionnez le dépôt `wapp-power-data-pipeline`, la branche `main` et le fichier `streamlit_app.py`.
-4. Cliquez sur **"Deploy"** !
-
----
-
-## ✉️ Contact & Liens Professionnels
-
-- **Candidat** : Christophe WAVOEKE
+- **Candidat** : Christophe WAVOEKE (Bac+5 Modélisation Mathématique & Informatique)
 - **Email** : christophewavoeke18@gmail.com
 - **Téléphone** : +229 01 66 81 83 76 / +229 01 40 17 77 74
 - **Portfolio Web** : [christopher-portofolio.vercel.app](https://christopher-portofolio.vercel.app/)

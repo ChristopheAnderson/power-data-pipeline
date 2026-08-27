@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-PORTAIL MULTI-PROJETS DATA ENGINEERING & ANALYTICS WAPP
+PORTAIL MULTI-PROJETS DATA ENGINEERING, BIG DATA & ANALYTICS WAPP
 Candidat : Christophe WAVOEKE (Ingénieur Bac+5 Modélisation Mathématique & Informatique)
 Poste : Ingénieur en Gestion et Analyse de Données des Systèmes Électriques (WAPP / EEEOA)
 """
@@ -8,13 +8,15 @@ import streamlit as st
 import sys
 import os
 
-# Ensure subdirectories are importable
 sys.path.append(os.path.dirname(__file__))
 
 from projet1_rte_api.app_rte import render_projet1
 from projet2_data_governance.data_governance_app import render_projet2
 from projet3_ml_load_forecasting.ml_forecasting_app import render_projet3
 from projet4_pyspark_bigdata.pyspark_app import render_projet4
+from projet5_geospatial_solar.geospatial_solar_app import render_projet5
+from projet6_streaming_pyspark.streaming_app import render_projet6
+from projet7_market_nodal_pricing.market_pricing_app import render_projet7
 
 st.set_page_config(
     page_title="WAPP Data Engineering Portfolio - Christophe WAVOEKE",
@@ -30,13 +32,16 @@ st.sidebar.markdown("**Christophe WAVOEKE**  \nIngénieur Bac+5 Modélisation & 
 st.sidebar.markdown("---")
 
 menu = st.sidebar.radio(
-    "Navigation Projets :",
+    "Navigation Projets (7 Projets) :",
     [
         "🏠 Accueil & Profil Candidat",
         "⚡ Projet 1 : Pipeline API RTE (Temps Réel)",
         "🛡️ Projet 2 : Qualité & Données WAPP (CEDEAO)",
         "📈 Projet 3 : Prévision ML (Load Forecasting)",
-        "🐘 Projet 4 : Big Data PySpark & Hive SQL"
+        "🐘 Projet 4 : Big Data PySpark & Hive SQL",
+        "🌍 Projet 5 : Ingestion Géospatiale Satellite (NASA POWER)",
+        "⚡ Projet 6 : Streaming Temps Réel PMU (PySpark)",
+        "📊 Projet 7 : Analytics Marché Nodal LMP (WAPP)"
     ]
 )
 
@@ -50,7 +55,7 @@ st.sidebar.info("""
 """)
 
 if menu == "🏠 Accueil & Profil Candidat":
-    st.title("⚡ Portfolio d'Ingénierie de Données Énergétiques & Analytics")
+    st.title("⚡ Portfolio d'Ingénierie de Données Énergétiques, Big Data & Analytics")
     st.subheader("Candidature pour le poste d'Ingénieur en Gestion et Analyse de Données — WAPP / EEEOA")
 
     col_profile, col_summary = st.columns([1, 2])
@@ -70,17 +75,20 @@ if menu == "🏠 Accueil & Profil Candidat":
 
     with col_summary:
         st.markdown("""
-        ### 🎯 Alignement avec le Poste WAPP (Centre d'Information et de Coordination)
-        Ce portail rassemble **4 projets pratiques d'ingénierie et d'analyse de données électriques**, développés sur des jeux de données ouverts 100% gratuits :
+        ### 🎯 Portfolio de 7 Projets Avancés sur Données Énergétiques
+        Ce portail rassemble **7 projets complexes d'ingénierie et d'analyse de données**, résolus sur des jeux de données ouverts 100% gratuits :
 
-        1. **Projet 1 (API Ingestion)** : Pipeline automatisé interrogeant l'API RTE éCO2mix en temps réel avec restitution sous Streamlit.
-        2. **Projet 2 (Gouvernance & Qualité)** : Engine d'audit des données télémesurées des GRT membres du WAPP et intégration des Open Data Banque Mondiale pour la zone CEDEAO.
-        3. **Projet 3 (Machine Learning)** : Modèle de prévision de la demande électrique (*Load Forecasting*) sur 40 000+ relevés du Panama avec évaluation RMSE/MAE.
-        4. **Projet 4 (Big Data)** : Traitement distribué sous **PySpark** & **Hive SQL** de données de comptage 15-min (UCI Data) sur cluster Docker.
+        1. **Projet 1 (API Ingestion)** : Ingestion automatisée temps réel de l'API RTE éCO2mix (JSON) & Dashboard réactif.
+        2. **Projet 2 (Gouvernance & Qualité)** : Moteur d'audit de complétude % des GRT WAPP et données Banque Mondiale (CEDEAO).
+        3. **Projet 3 (Machine Learning)** : Modèle de prévision de charge (*Load Forecasting*) sur 40 000+ relevés du Panama.
+        4. **Projet 4 (Big Data PySpark)** : Traitement distribué sous **PySpark 3.x** & **Hive SQL** de millions de relevés 15-min.
+        5. **Projet 5 (Géospatiale & Satellite)** : Ingestion **NASA POWER API** et interpolation par **Krigeage / BME** de l'irradiance solaire (GHI).
+        6. **Projet 6 (Streaming Real-Time)** : Traitement de flux haute fréquence SCADA / PMU sous **PySpark Structured Streaming**.
+        7. **Projet 7 (Marché & Pricing Nodal)** : Simulation de l'Economic Dispatch (OPF) et calcul des prix marginaux nodiaux ($/MWh).
         """)
 
     st.markdown("---")
-    st.success("👈 Utilisez le menu dans la barre latérale pour explorer chaque projet en détail !")
+    st.success("👈 Utilisez le menu dans la barre latérale pour explorer les 7 projets en détail !")
 
 elif menu == "⚡ Projet 1 : Pipeline API RTE (Temps Réel)":
     render_projet1()
@@ -93,3 +101,12 @@ elif menu == "📈 Projet 3 : Prévision ML (Load Forecasting)":
 
 elif menu == "🐘 Projet 4 : Big Data PySpark & Hive SQL":
     render_projet4()
+
+elif menu == "🌍 Projet 5 : Ingestion Géospatiale Satellite (NASA POWER)":
+    render_projet5()
+
+elif menu == "⚡ Projet 6 : Streaming Temps Réel PMU (PySpark)":
+    render_projet6()
+
+elif menu == "📊 Projet 7 : Analytics Marché Nodal LMP (WAPP)":
+    render_projet7()
