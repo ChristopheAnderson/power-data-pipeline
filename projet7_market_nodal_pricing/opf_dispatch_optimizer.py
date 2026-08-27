@@ -26,7 +26,6 @@ class WAPPMarketDispatchOptimizer:
         
         remaining_demand = total_regional_demand_mw
         dispatched_mw = []
-        lmp_usd_mwh = []
 
         system_marginal_price = 0.0
 
@@ -48,10 +47,10 @@ class WAPPMarketDispatchOptimizer:
             dispatched_mw.append(p_mw)
 
         df_gen["dispatched_mw"] = dispatched_mw
-        df_gen["unit_load_pct"] = round((df_gen["dispatched_mw"] / df_gen["capacity_mw"]) * 100.0, 1)
+        df_gen["unit_load_pct"] = np.round((df_gen["dispatched_mw"] / df_gen["capacity_mw"]) * 100.0, 1)
         
-        # Calculate Nodal Price LMP = System Marginal Price + Congestion Component
-        df_gen["nodal_lmp_usd_mwh"] = round(system_marginal_price + np.random.uniform(0, line_congestion_penalty, len(df_gen)), 2)
+        # Calculate Nodal Price LMP = System Marginal Price + Congestion Component using np.round for pandas/numpy compatibility
+        df_gen["nodal_lmp_usd_mwh"] = np.round(system_marginal_price + np.random.uniform(0, line_congestion_penalty, len(df_gen)), 2)
 
         total_market_cost_usd = (df_gen["dispatched_mw"] * df_gen["marginal_cost_usd_mwh"]).sum()
 
