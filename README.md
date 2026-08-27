@@ -1,4 +1,4 @@
-# ⚡ WAPP Power Data Pipeline, Big Data & Analytics Portfolio
+# ⚡ WAPP Power Data Pipeline, Multi-Sector Big Data & Analytics Portfolio (10 Projects)
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io)
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
@@ -10,35 +10,29 @@
 
 ---
 
-## 🎯 Aperçu du Portfolio (7 Projets Avancés)
+## 🎯 Aperçu du Portfolio (10 Projets Multi-Secteurs)
 
-Ce dépôt contient la suite complète des **7 projets complexes d'ingénierie, de Big Data et d'analyse de données électriques**, développés sur des sources Open Data 100% gratuites pour répondre aux exigences du Terme de Référence (TDR) du WAPP :
+Ce dépôt rassemble **10 projets avancés d'ingénierie de données, Big Data, IoT et Analytics**, développés sur des données ouverts 100% gratuites :
 
 ```text
                                   +-------------------------------------------------+
-                                  |     WAPP DATA PIPELINE & ANALYTICS PORTAL       |
+                                  |    MULTI-SECTOR DATA PIPELINE & ANALYTICS       |
                                   +-------------------------------------------------+
                                                            |
-           +-------------------+-------------------+-------+-------+-------------------+-------------------+
-           |                   |                   |               |                   |                   |
-           v                   v                   v               v                   v                   v
-+-------------------+ +-------------------+ +-------------------+ +-------------------+ +-------------------+ +-------------------+
-| Projet 1 : RTE    | | Projet 2 : Quality| | Projet 3 : ML     | | Projet 4 : PySpark| | Projet 5 : NASA   | | Projet 6 : PMU    |
-| API Ingestion     | | Audit GRT & WB    | | Load Forecasting  | | Big Data / Hive   | | Satellite & BME   | | Realtime Streaming|
-+-------------------+ +-------------------+ +-------------------+ +-------------------+ +-------------------+ +-------------------+
+  +--------+--------+--------+--------+--------+-----------+-----------+--------+--------+--------+
+  |        |        |        |        |        |           |           |        |        |        |
+  v        v        v        v        v        v           v           v        v        v        v
+[P1 API] [P2 DQ]  [P3 ML]  [P4 Spark][P5 NASA] [P6 Stream] [P7 Market] [P8 IoT]  [P9 Fin] [P10 Log]
 ```
 
 ---
 
-## 📂 Structure du Répertoire
+## 📂 Structure des 10 Projets
 
 ```text
 wapp-power-data-pipeline/
 │
-├── README.md                      <-- Documentation & Architecture
-├── requirements.txt               <-- Dépendances Python pour le Cloud
-├── .gitignore                     <-- Exclusion Git
-├── streamlit_app.py               <-- Portail Multi-Projets Principal (7 Projets)
+├── streamlit_app.py               <-- Portail Multi-Projets Principal (10 Projets)
 │
 ├── projet1_rte_api/               <-- Ingestion API RTE éCO2mix (Données Temps Réel)
 ├── projet2_data_governance/       <-- Moteur Qualité GRT & Données Banque Mondiale (CEDEAO)
@@ -46,50 +40,42 @@ wapp-power-data-pipeline/
 ├── projet4_pyspark_bigdata/       <-- Big Data PySpark 3.5 & Hive SQL (UCI 321 clients)
 ├── projet5_geospatial_solar/      <-- API NASA POWER Satellite & Géostatistique (BME/Krigeage)
 ├── projet6_streaming_pyspark/     <-- PySpark Structured Streaming & SCADA/PMU 50 Hz
-└── projet7_market_nodal_pricing/  <-- Marché Régional WAPP & Nodal Marginal Pricing (LMP)
+├── projet7_market_nodal_pricing/  <-- Marché Régional WAPP & Nodal Marginal Pricing (LMP)
+├── projet8_iot_electronics_sensor/ <-- IoT Industrielle, Analyse Spectrale FFT & RUL
+├── projet9_fintech_credit_risk/   <-- FinTech Credit Risk Scoring & Détection de Défaut
+└── projet10_logistics_supply_chain/<-- Smart Logistics & Traces GPS (Optimisation CO2)
 ```
 
 ---
 
-## ⚡ Description Détaillée des 7 Projets
+## ⚡ Résumé des 10 Projets
 
-### 1. Projet 1 — Pipeline API RTE éCO2mix & Dashboard Temps Réel
-- Ingestion sans clé de l'API REST RTE (JSON). Stockage SQLite et visuels Plotly du mix électrique.
-
-### 2. Projet 2 — Gouvernance, Qualité de Données & Analytics Afrique (WAPP / CEDEAO)
-- Audit de complétude % des GRT (Bénin, Côte d'Ivoire, Nigeria, Ghana) et indicateurs Banque Mondiale.
-
-### 3. Projet 3 — Machine Learning Load Forecasting (Panama - 40 000+ Relevés)
-- Modélisation de la pointe de charge avec Random Forest (RMSE: 43.03 MW, MAE: 34.39 MW, MAPE: 3.22%).
-
-### 4. Projet 4 — Mini Pipeline Big Data Distributed Processing (PySpark & Hive SQL)
-- Traitement distribué sous **PySpark 3.5** et requêtes **Hive SQL** sur cluster Docker Bitnami.
-
-### 5. Projet 5 — Ingestion Géospatiale Satellite (NASA POWER API) & Géostatistique
-- Ingestion satellite GHI, variogramme expérimental $\gamma(h)$ et interpolation par **Krigeage/IDW** (Rapprochement direct avec la thèse d'ingénieur ENSGMM de Christophe WAVOEKE).
-
-### 6. Projet 6 — Real-Time Streaming & SCADA/PMU (PySpark Structured Streaming)
-- Traitement en streaming des signaux PMU (50 Hz), fenêtres glissantes et détection des chutes de fréquence (< 49.5 Hz).
-
-### 7. Projet 7 — Marché Régional WAPP & Locational Marginal Pricing (LMP $/MWh)
-- Optimisation de l'Economic Dispatch (OPF) du marché régional d'électricité CEDEAO et calcul des prix marginaux nodiaux.
+1. **Projet 1 — Pipeline API RTE éCO2mix** : Ingestion REST JSON temps réel et visuels Plotly.
+2. **Projet 2 — Gouvernance & Qualité WAPP (CEDEAO)** : Audit de complétude % et indicateurs Banque Mondiale.
+3. **Projet 3 — ML Load Forecasting (Panama)** : Random Forest (RMSE: 43.03 MW, MAE: 34.39 MW, MAPE: 3.22%).
+4. **Projet 4 — Big Data PySpark 3.5 & Hive SQL** : Traitement distribué de millions de lignes 15-min.
+5. **Projet 5 — Géospatiale Satellite (NASA POWER) & BME/Krigeage** : Interpolation spatiale d'irradiance solaire.
+6. **Projet 6 — Real-Time Streaming SCADA/PMU** : Flux 50 Hz sous PySpark Structured Streaming.
+7. **Projet 7 — Marché Régional WAPP & LMP $/MWh** : Economic Dispatch (OPF) et prix marginaux nodiaux.
+8. **Projet 8 — Industrial IoT & Capteurs Électroniques** : Traitement de signal capteurs (1 kHz), FFT et RUL.
+9. **Projet 9 — FinTech Big Data & Credit Scoring** : Modélisation du risque de défaut bancaire.
+10. **Projet 10 — Smart Logistics & Supply Chain** : Traces GPS de flottes et optimisation CO2 des tournées.
 
 ---
 
-## 🚀 Exécution Locale
+## 🚀 Exécution
 
 ```bash
 git clone https://github.com/christopher-wavoeke/wapp-power-data-pipeline.git
 cd wapp-power-data-pipeline
-pip install -r requirements.txt
 python -m streamlit run streamlit_app.py
 ```
 
 ---
 
-## ✉️ Contact & Links
+## ✉️ Contact
 
-- **Candidat** : Christophe WAVOEKE (Bac+5 Modélisation Mathématique & Informatique)
+- **Christophe WAVOEKE** (Bac+5 Modélisation Mathématique & Informatique)
 - **Email** : christophewavoeke18@gmail.com
 - **Téléphone** : +229 01 66 81 83 76 / +229 01 40 17 77 74
 - **Portfolio Web** : [christopher-portofolio.vercel.app](https://christopher-portofolio.vercel.app/)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-PORTAIL MULTI-PROJETS DATA ENGINEERING, BIG DATA & ANALYTICS WAPP
+PORTAIL MULTI-PROJETS DATA ENGINEERING, BIG DATA & MULTI-SECTEUR ANALYTICS (10 PROJETS)
 Candidat : Christophe WAVOEKE (Ingénieur Bac+5 Modélisation Mathématique & Informatique)
 Poste : Ingénieur en Gestion et Analyse de Données des Systèmes Électriques (WAPP / EEEOA)
 """
@@ -17,9 +17,12 @@ from projet4_pyspark_bigdata.pyspark_app import render_projet4
 from projet5_geospatial_solar.geospatial_solar_app import render_projet5
 from projet6_streaming_pyspark.streaming_app import render_projet6
 from projet7_market_nodal_pricing.market_pricing_app import render_projet7
+from projet8_iot_electronics_sensor.iot_electronics_app import render_projet8
+from projet9_fintech_credit_risk.fintech_risk_app import render_projet9
+from projet10_logistics_supply_chain.logistics_supply_app import render_projet10
 
 st.set_page_config(
-    page_title="WAPP Data Engineering Portfolio - Christophe WAVOEKE",
+    page_title="WAPP Multi-Sector Data Portfolio - Christophe WAVOEKE",
     page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -27,12 +30,12 @@ st.set_page_config(
 
 # Sidebar Navigation
 st.sidebar.image("https://img.icons8.com/color/96/lightning-bolt.png", width=64)
-st.sidebar.title("⚡ WAPP Portfolio Data")
+st.sidebar.title("⚡ Portfolio Data 10 Projets")
 st.sidebar.markdown("**Christophe WAVOEKE**  \nIngénieur Bac+5 Modélisation & Data")
 st.sidebar.markdown("---")
 
 menu = st.sidebar.radio(
-    "Navigation Projets (7 Projets) :",
+    "Navigation (10 Projets Multi-Secteurs) :",
     [
         "🏠 Accueil & Profil Candidat",
         "⚡ Projet 1 : Pipeline API RTE (Temps Réel)",
@@ -41,7 +44,10 @@ menu = st.sidebar.radio(
         "🐘 Projet 4 : Big Data PySpark & Hive SQL",
         "🌍 Projet 5 : Ingestion Géospatiale Satellite (NASA POWER)",
         "⚡ Projet 6 : Streaming Temps Réel PMU (PySpark)",
-        "📊 Projet 7 : Analytics Marché Nodal LMP (WAPP)"
+        "📊 Projet 7 : Analytics Marché Nodal LMP (WAPP)",
+        "🔬 Projet 8 : Industrial IoT & Capteurs Électroniques (FFT)",
+        "💳 Projet 9 : FinTech Big Data & Credit Risk Scoring",
+        "🚚 Projet 10 : Smart Logistics & Supply Chain GPS"
     ]
 )
 
@@ -55,7 +61,7 @@ st.sidebar.info("""
 """)
 
 if menu == "🏠 Accueil & Profil Candidat":
-    st.title("⚡ Portfolio d'Ingénierie de Données Énergétiques, Big Data & Analytics")
+    st.title("⚡ Portfolio Multi-Secteurs : Ingénierie de Données, Big Data & Analytics (10 Projets)")
     st.subheader("Candidature pour le poste d'Ingénieur en Gestion et Analyse de Données — WAPP / EEEOA")
 
     col_profile, col_summary = st.columns([1, 2])
@@ -75,20 +81,20 @@ if menu == "🏠 Accueil & Profil Candidat":
 
     with col_summary:
         st.markdown("""
-        ### 🎯 Portfolio de 7 Projets Avancés sur Données Énergétiques
-        Ce portail rassemble **7 projets complexes d'ingénierie et d'analyse de données**, résolus sur des jeux de données ouverts 100% gratuits :
+        ### 🎯 Portfolio de 10 Projets Avancés Résolus (Multi-Secteurs)
+        Ce portail rassemble **10 projets complexes d'ingénierie et d'analyse de données**, couvrant l'énergie, l'électronique industrielle, la finance et la logistique :
 
-        1. **Projet 1 (API Ingestion)** : Ingestion automatisée temps réel de l'API RTE éCO2mix (JSON) & Dashboard réactif.
-        2. **Projet 2 (Gouvernance & Qualité)** : Moteur d'audit de complétude % des GRT WAPP et données Banque Mondiale (CEDEAO).
-        3. **Projet 3 (Machine Learning)** : Modèle de prévision de charge (*Load Forecasting*) sur 40 000+ relevés du Panama.
-        4. **Projet 4 (Big Data PySpark)** : Traitement distribué sous **PySpark 3.x** & **Hive SQL** de millions de relevés 15-min.
-        5. **Projet 5 (Géospatiale & Satellite)** : Ingestion **NASA POWER API** et interpolation par **Krigeage / BME** de l'irradiance solaire (GHI).
-        6. **Projet 6 (Streaming Real-Time)** : Traitement de flux haute fréquence SCADA / PMU sous **PySpark Structured Streaming**.
-        7. **Projet 7 (Marché & Pricing Nodal)** : Simulation de l'Economic Dispatch (OPF) et calcul des prix marginaux nodiaux ($/MWh).
+        - **Secteur Énergie & Réseau** : API RTE Temps Réel, Audit Qualité GRT WAPP, ML Load Forecasting (Panama 40k), Big Data PySpark/Hive SQL (321 compteurs x 3 ans).
+        - **Secteur Géospatiale & Satellite** : Ingestion **NASA POWER API** et interpolation par **Krigeage / BME** de l'irradiance solaire (GHI).
+        - **Secteur Réseau Temps Réel & SCADA** : Flux de télémesure PMU (50 Hz) sous **PySpark Structured Streaming**.
+        - **Secteur Économie de l'Énergie** : Economic Dispatch (OPF) et calcul des prix marginaux nodiaux (LMP $/MWh).
+        - **Secteur IoT & Électronique** : Filtrage et analyse spectrale **FFT (Transformée de Fourier)** de capteurs de vibrations (1 kHz) et durée de vie utile (RUL).
+        - **Secteur FinTech & Risk** : Moteur de **Credit Risk Scoring** bancaire et prédiction du risque de défaut.
+        - **Secteur Logistique & Supply Chain** : Traitement de traces GPS de flottes de camions et optimisation d'itinéraires (réduction CO2).
         """)
 
     st.markdown("---")
-    st.success("👈 Utilisez le menu dans la barre latérale pour explorer les 7 projets en détail !")
+    st.success("👈 Utilisez le menu dans la barre latérale pour explorer l'ensemble des 10 projets en détail !")
 
 elif menu == "⚡ Projet 1 : Pipeline API RTE (Temps Réel)":
     render_projet1()
@@ -110,3 +116,12 @@ elif menu == "⚡ Projet 6 : Streaming Temps Réel PMU (PySpark)":
 
 elif menu == "📊 Projet 7 : Analytics Marché Nodal LMP (WAPP)":
     render_projet7()
+
+elif menu == "🔬 Projet 8 : Industrial IoT & Capteurs Électroniques (FFT)":
+    render_projet8()
+
+elif menu == "💳 Projet 9 : FinTech Big Data & Credit Risk Scoring":
+    render_projet9()
+
+elif menu == "🚚 Projet 10 : Smart Logistics & Supply Chain GPS":
+    render_projet10()
