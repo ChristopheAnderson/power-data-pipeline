@@ -7,10 +7,21 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
+import os
+import sys
+
+# Bulletproof sys.path setup for standalone or imported execution
+dir_path = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(dir_path, ".."))
+if dir_path not in sys.path:
+    sys.path.insert(0, dir_path)
+if parent_dir not in sys.path:
+    sys.path.insert(0, parent_dir)
+
 try:
-    from .quality_wapp import WAPPDataQualityEngine, generate_sample_tso_telemetry
-except ImportError:
     from quality_wapp import WAPPDataQualityEngine, generate_sample_tso_telemetry
+except ImportError:
+    from projet2_data_governance.quality_wapp import WAPPDataQualityEngine, generate_sample_tso_telemetry
 
 def get_world_bank_ecowas_data():
     """
@@ -34,11 +45,11 @@ def render_projet2():
     st.markdown("""
     **Périmètre Métier WAPP (Centre d'Information et de Coordination)** :
     - Audit automatisé des flux de télémesure envoyés par les Gestionnaires de Réseau de Transport (GRT) membres.
-    - Évaluation des scores de complétude (%) et détection des déviations hors normes (Tension $161\text{ kV} \pm 10\%$, Fréquence $50\text{ Hz} \pm 0.5\text{ Hz}$).
+    - Évaluation des scores de complétude (%) et détection des déviations hors normes (Tension $161\\text{ kV} \\pm 10\\%$, Fréquence $50\\text{ Hz} \\pm 0.5\\text{ Hz}$).
     - Intégration des Open Data Banque Mondiale / CEDEAO (*Access to Electricity & Network Losses*).
     """)
 
-    tab1, tab2 = st.tabs(["📊 Audit Qualité Télémesure GRT", "🌍 Indicators Énergétiques Banque Mondiale (CEDEAO)"])
+    tab1, tab2 = st.tabs(["📊 Audit Qualité Télémesure GRT", "🌍 Indicateurs Énergétiques Banque Mondiale (CEDEAO)"])
 
     with tab1:
         st.subheader("1. Audit de Complétude et Détection d'Anomalies des GRT")

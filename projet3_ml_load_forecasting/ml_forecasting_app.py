@@ -9,17 +9,26 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 import os
+import sys
 import pickle
 
+# Bulletproof sys.path setup for standalone or imported execution
+dir_path = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(dir_path, ".."))
+if dir_path not in sys.path:
+    sys.path.insert(0, dir_path)
+if parent_dir not in sys.path:
+    sys.path.insert(0, parent_dir)
+
 try:
-    from .generate_sample_panama_data import generate_panama_dataset
-    from .train_ml_forecast import create_features, train_and_evaluate
-except ImportError:
     from generate_sample_panama_data import generate_panama_dataset
     from train_ml_forecast import create_features, train_and_evaluate
+except ImportError:
+    from projet3_ml_load_forecasting.generate_sample_panama_data import generate_panama_dataset
+    from projet3_ml_load_forecasting.train_ml_forecast import create_features, train_and_evaluate
 
-DATA_PATH = os.path.join(os.path.dirname(__file__), "sample_panama_load.csv")
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "load_forecast_model.pkl")
+DATA_PATH = os.path.join(dir_path, "sample_panama_load.csv")
+MODEL_PATH = os.path.join(dir_path, "load_forecast_model.pkl")
 
 def get_data_and_model():
     if not os.path.exists(DATA_PATH):
@@ -63,7 +72,7 @@ def render_projet3():
     with col_horizon:
         horizon_hours = st.slider("Horizon de prévision (heures)", min_value=24, max_value=168, value=72, step=24)
     with col_temp:
-        temp_delta = st.slider("Variation de température simulee (°C)", min_value=-5.0, max_value=5.0, value=0.0, step=0.5)
+        temp_delta = st.slider("Variation de température simulée (°C)", min_value=-5.0, max_value=5.0, value=0.0, step=0.5)
 
     df_feat = create_features(df_raw)
     
