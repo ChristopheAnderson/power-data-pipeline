@@ -77,6 +77,8 @@ PAGES = {
     "🌧️ P11 : Climat & Précipitations (Open-Meteo API)": render_projet11,
     "🏥 P12 : Santé & Démographie (WHO GHO + World Bank)": render_projet12,
     "📊 P13 : Économie & Développement (World Bank API)": render_projet13,
+}
+
 default_index = 0
 try:
     page_param = st.query_params.get("page", "").lower()
