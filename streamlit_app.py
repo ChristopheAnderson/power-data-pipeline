@@ -26,18 +26,31 @@ st.set_page_config(
     page_icon="⚡", layout="wide", initial_sidebar_state="expanded"
 )
 
-# --- PHOTO DE PROFIL DANS LA BARRE LATÉRALE ---
+# --- PHOTO DE PROFIL DANS LA BARRE LATÉRALE (RONDE & CENTRÉE) ---
 PROFILE_PIC_PATH = None
 for path in ["assets/profile.jpg", "assets/profile.png", "assets/profile.jpeg", "profile.jpg", "profile.png"]:
     if os.path.exists(os.path.join(os.path.dirname(__file__), path)):
         PROFILE_PIC_PATH = os.path.join(os.path.dirname(__file__), path)
         break
 
+img_src = "https://raw.githubusercontent.com/ChristopheAnderson/energy-grid-data-platform/main/assets/profile.jpg"
 if PROFILE_PIC_PATH:
-    st.sidebar.image(PROFILE_PIC_PATH, width=120)
-else:
-    # URL de photo de profil par défaut ou avatar
-    st.sidebar.image("https://raw.githubusercontent.com/ChristopheAnderson/energy-grid-data-platform/main/assets/profile.jpg", width=120)
+    import base64
+    with open(PROFILE_PIC_PATH, "rb") as img_file:
+        encoded = base64.b64encode(img_file.read()).decode()
+    ext = PROFILE_PIC_PATH.split('.')[-1].lower()
+    if ext == 'jpg':
+        ext = 'jpeg'
+    img_src = f"data:image/{ext};base64,{encoded}"
+
+st.sidebar.markdown(
+    f"""
+    <div style="display: flex; justify-content: center; margin-top: 10px; margin-bottom: 15px;">
+        <img src="{img_src}" style="width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 3px solid #00D4FF; box-shadow: 0 4px 12px rgba(0,212,255,0.25);" />
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 st.sidebar.title("⚡ PowerGrid & Data Suite")
 st.sidebar.markdown("**Christophe WAVOEKE**  \nIngénieur Modélisation & Data Systems")
