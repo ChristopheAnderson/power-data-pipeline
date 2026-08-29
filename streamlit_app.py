@@ -37,7 +37,7 @@ if PROFILE_PIC_PATH:
     st.sidebar.image(PROFILE_PIC_PATH, width=120)
 else:
     # URL de photo de profil par défaut ou avatar
-    st.sidebar.image("https://raw.githubusercontent.com/ChristopheAnderson/energy-grid-data-platform/main/assets/profile.jpg", width=120, fallback="https://img.icons8.com/color/96/user-female-circle.png")
+    st.sidebar.image("https://raw.githubusercontent.com/ChristopheAnderson/energy-grid-data-platform/main/assets/profile.jpg", width=120)
 
 st.sidebar.title("⚡ PowerGrid & Data Suite")
 st.sidebar.markdown("**Christophe WAVOEKE**  \nIngénieur Modélisation & Data Systems")
