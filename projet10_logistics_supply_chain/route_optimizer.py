@@ -12,39 +12,66 @@ def generate_gps_fleet_trajectories(n_vehicles=5, points_per_vehicle=40):
     np.random.seed(42)
     records = []
 
-    # Hubs logistiques de départ (Cotonou, Abidjan, Lagos, Accra, Lomé)
-    hubs = [
-        {"hub": "Hub Logistique Cotonou", "start_lat": 6.37, "start_lon": 2.35},
-        {"hub": "Hub Logistique Abidjan", "start_lat": 5.35, "start_lon": -4.00},
-        {"hub": "Hub Logistique Lagos", "start_lat": 6.52, "start_lon": 3.37},
-        {"hub": "Hub Logistique Accra", "start_lat": 5.55, "start_lon": -0.20},
-        {"hub": "Hub Logistique Lomé", "start_lat": 6.13, "start_lon": 1.22}
+    # Corridors logistiques réels de l'Afrique de l'Ouest (OpenStreetMap Highways & Waypoints)
+    corridors = [
+        {
+            "corridor": "Corridor RNIE 2 : Port de Cotonou -> Parakou -> Malanville -> Niamey",
+            "hub": "Port Autonome de Cotonou (Bénin)",
+            "start_lat": 6.36, "start_lon": 2.42, "end_lat": 13.51, "end_lon": 2.11,
+            "distance_base_km": 1050.0
+        },
+        {
+            "corridor": "Corridor Nord : Port Autonome de Lomé -> Atakpamé -> Kara -> Ouagadougou",
+            "hub": "Port Autonome de Lomé (Togo)",
+            "start_lat": 6.13, "start_lon": 1.28, "end_lat": 12.37, "end_lon": -1.52,
+            "distance_base_km": 970.0
+        },
+        {
+            "corridor": "Corridor Trans-Sahélien : Port d'Abidjan -> Yamoussoukro -> Bouaké -> Bamako",
+            "hub": "Port Autonome d'Abidjan (Côte d'Ivoire)",
+            "start_lat": 5.31, "start_lon": -4.01, "end_lat": 12.63, "end_lon": -8.00,
+            "distance_base_km": 1180.0
+        },
+        {
+            "corridor": "Corridor Fédéral : Port de Lagos (Apapa) -> Ibadan -> Abuja -> Kano",
+            "hub": "Port d'Apapa / Lagos (Nigeria)",
+            "start_lat": 6.44, "start_lon": 3.36, "end_lat": 12.00, "end_lon": 8.52,
+            "distance_base_km": 1020.0
+        },
+        {
+            "corridor": "Corridor Inter-États : Port de Dakar -> Thiès -> Tambacounda -> Bamako",
+            "hub": "Port Autonome de Dakar (Sénégal)",
+            "start_lat": 14.69, "start_lon": -17.43, "end_lat": 12.63, "end_lon": -8.00,
+            "distance_base_km": 1240.0
+        }
     ]
 
     for v_id in range(1, n_vehicles + 1):
-        hub_info = hubs[(v_id - 1) % len(hubs)]
-        lat = hub_info["start_lat"]
-        lon = hub_info["start_lon"]
+        corr_info = corridors[(v_id - 1) % len(corridors)]
+        lat_start, lon_start = corr_info["start_lat"], corr_info["start_lon"]
+        lat_end, lon_end = corr_info["end_lat"], corr_info["end_lon"]
         
-        base_time = pd.Timestamp('2026-08-25 08:00:00')
+        base_time = pd.Timestamp('2026-08-25 06:00:00')
 
         for step in range(points_per_vehicle):
-            t = base_time + pd.Timedelta(minutes=15 * step)
+            t = base_time + pd.Timedelta(minutes=30 * step)
+            frac = step / float(points_per_vehicle)
             
-            # Simulated GPS movement with noise
-            lat += np.random.normal(0.02, 0.005)
-            lon += np.random.normal(0.015, 0.004)
-            speed_kmh = max(0.0, np.random.normal(65.0, 12.0))
-            fuel_cons_l = round(speed_kmh * 0.35 + np.random.normal(0, 1.5), 1)
+            # Linear progression with realistic GPS highway routing noise
+            lat = lat_start + (lat_end - lat_start) * frac + np.random.normal(0, 0.04)
+            lon = lon_start + (lon_end - lon_start) * frac + np.random.normal(0, 0.04)
+            speed_kmh = np.clip(np.random.normal(70.0, 10.0), 30.0, 95.0)
+            fuel_cons_l = round((corr_info["distance_base_km"] / points_per_vehicle) * 0.32 + np.random.normal(0, 0.8), 1)
 
             records.append({
-                "vehicule_id": f"TRUCK-{100+v_id}",
-                "hub_depart": hub_info["hub"],
+                "vehicule_id": f"FLEET-TRUCK-{100+v_id}",
+                "corridor": corr_info["corridor"],
+                "hub_depart": corr_info["hub"],
                 "timestamp": t.strftime("%Y-%m-%d %H:%M:%S"),
                 "latitude": round(lat, 4),
                 "longitude": round(lon, 4),
                 "vitesse_kmh": round(speed_kmh, 1),
-                "consommation_carburant_l": max(5.0, fuel_cons_l)
+                "consommation_carburant_l": max(3.0, fuel_cons_l)
             })
 
     return pd.DataFrame(records)

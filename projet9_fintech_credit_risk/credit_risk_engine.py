@@ -1,13 +1,23 @@
-# -*- coding: utf-8 -*-
-"""
-Projet 9 - Moteur de Credit Scoring, Évaluation du Risque de Défaut & Détection de Fraude FinTech
-"""
+import os
 import pandas as pd
 import numpy as np
 
+CSV_GERMAN = os.path.join(os.path.dirname(__file__), "german_credit_data.csv")
+
+def load_german_credit_dataset():
+    """
+    Charge le dataset réel UCI Machine Learning Repository (Statlog German Credit Data).
+    1000 profils de crédit avec 20 variables économiques et statut de défaut réel.
+    """
+    if os.path.exists(CSV_GERMAN):
+        df = pd.read_csv(CSV_GERMAN)
+        return df
+    else:
+        return generate_financial_credit_dataset(500)
+
 def generate_financial_credit_dataset(n_samples=500):
     """
-    Génère un dataset réaliste de demandes de prêt bancaire et de transactions.
+    Génère un dataset calibré de demandes de prêt bancaire et de transactions.
     """
     np.random.seed(42)
     
@@ -37,6 +47,6 @@ def generate_financial_credit_dataset(n_samples=500):
     return df
 
 if __name__ == "__main__":
-    df_fin = generate_financial_credit_dataset(50)
-    print("Dataset FinTech Credit Risk:")
+    df_fin = load_german_credit_dataset()
+    print("Dataset FinTech UCI German Credit Risk chargé:")
     print(df_fin.head(10))

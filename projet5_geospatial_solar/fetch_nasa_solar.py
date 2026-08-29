@@ -7,25 +7,25 @@ import requests
 import pandas as pd
 import numpy as np
 
-def fetch_nasa_power_point(lat=6.37, lon=2.35, start_date="20240101", end_date="20240131"):
+def fetch_nasa_power_point(lat=6.37, lon=2.35, start_date="20230101", end_date="20230131"):
     """
     Interroge l'API NASA POWER pour un point géographique (Lat, Lon).
-    Paramètres : ALLSKY_SWRAD_DAILY (Irradiance kWh/m²/jour), T2M (Temp °C), WS10M (Vent m/s).
+    Paramètres : ALLSKY_SFC_SW_DWN (Irradiance solaire kWh/m²/jour), T2M (Temp °C), WS10M (Vent m/s).
     """
-    url = f"https://power.larc.nasa.gov/api/temporal/daily/point?parameters=ALLSKY_SWRAD_DAILY,T2M,WS10M&community=RE&longitude={lon}&latitude={lat}&start={start_date}&end={end_date}&format=JSON"
+    url = f"https://power.larc.nasa.gov/api/temporal/daily/point?parameters=ALLSKY_SFC_SW_DWN,T2M,WS10M&community=RE&longitude={lon}&latitude={lat}&start={start_date}&end={end_date}&format=JSON"
     try:
-        res = requests.get(url, timeout=10)
+        res = requests.get(url, timeout=15)
         if res.status_code == 200:
             data = res.json()
             params = data.get('properties', {}).get('parameter', {})
-            ghi = params.get('ALLSKY_SWRAD_DAILY', {})
+            ghi = params.get('ALLSKY_SFC_SW_DWN', {})
             temp = params.get('T2M', {})
             wind = params.get('WS10M', {})
             
             records = []
-            for date_key in ghi.keys():
+            for date_key in sorted(ghi.keys()):
                 records.append({
-                    "date": date_key,
+                    "date": pd.to_datetime(date_key, format="%Y%m%d"),
                     "latitude": lat,
                     "longitude": lon,
                     "ghi_kwh_m2": ghi.get(date_key, 0.0),

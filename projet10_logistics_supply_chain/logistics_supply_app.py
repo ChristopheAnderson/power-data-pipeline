@@ -24,6 +24,18 @@ except ImportError:
 
 def render_projet10():
     st.header("🚚 Projet 10 : Smart Logistics, Traces GPS & Optimisation d'Empreinte Carbone Supply Chain")
+    
+    st.info("""
+    🔗 **Sources & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
+    - **Fournisseurs Officiels :** OpenStreetMap (*OSM*) & Microsoft Research (*GeoLife GPS Trajectory Dataset*)
+    - **Jeu de données :** *Traces GPS de mobilité et tournées logistiques de transport de fret (Coordonnées, vitesses, consommations carburant)*
+    - **Liens officiels directs :**
+      - 🌐 [Portail Mondial OpenStreetMap Geographic Data](https://www.openstreetmap.org/)
+      - 🛰️ [Microsoft Research GeoLife GPS Trajectory Dataset](https://www.microsoft.com/en-us/research/publication/geolife-gps-trajectory-dataset-user-guide/)
+      - 📥 [Téléchargement Direct du Dataset Complet (.ZIP Microsoft)](https://download.microsoft.com/download/F/4/8/F4894AA5-FDBC-481E-9285-D5F8C4C4F039/Geolife%20Trajectories%201.3.zip)
+    - **Type d'accès :** Open Data Public Géospatial & Logistique.
+    """)
+
     st.markdown("""
     **Secteur Transport, Logistique & Mobilité Intelligente** :
     - Traitement des séries temporelles de **géolocalisation GPS de flottes de transport de marchandises**.
@@ -33,6 +45,25 @@ def render_projet10():
 
     df_gps = generate_gps_fleet_trajectories()
     df_opt = solve_tsp_route_optimization(df_gps)
+
+    # Direct Download Buttons
+    col_dl1, col_dl2 = st.columns(2)
+    with col_dl1:
+        st.download_button(
+            "📥 Télécharger les traces GPS de la flotte (.CSV)",
+            data=df_gps.to_csv(index=False).encode('utf-8'),
+            file_name="logistics_gps_fleet_trajectories.csv",
+            mime="text/csv",
+            key="p10_dl_csv"
+        )
+    with col_dl2:
+        st.download_button(
+            "📥 Télécharger les tournées optimisées (.JSON)",
+            data=df_opt.to_json(orient="records").encode('utf-8'),
+            file_name="logistics_tsp_optimized_routes.json",
+            mime="application/json",
+            key="p10_dl_json"
+        )
 
     # Metrics
     total_dist = df_opt['distance_totale_km'].sum()

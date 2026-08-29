@@ -70,23 +70,23 @@ if menu == "🏠 Accueil & Profil Candidat":
 
     categories = {
         "⚡ ÉNERGIE & RÉSEAU (P1–P7)": [
-            "P1 · API RTE éCO2mix Temps Réel",
-            "P2 · Gouvernance & Qualité des Données GRT WAPP",
-            "P3 · ML Load Forecasting (Panama 40k relevés, RMSE 43 MW)",
-            "P4 · Big Data PySpark 3.5 & Hive SQL (321 compteurs × 3 ans)",
-            "P5 · Ingestion Satellite NASA POWER & Géostatistique BME/Krigeage",
-            "P6 · Streaming SCADA/PMU 50 Hz (PySpark Structured Streaming)",
-            "P7 · Economic Dispatch & Prix Marginaux Nodiaux LMP ($/MWh)",
+            "**P1** · API RTE éCO2mix Temps Réel — 🔗 [Données Open Data Réseaux Énergies (ODRE)](https://opendata.reseaux-energies.fr/explore/dataset/eco2mix-national-tr/information/) | 📥 *Téléchargeable en direct (.CSV / .JSON) sur la sous-page*",
+            "**P2** · Gouvernance & Qualité des Données GRT WAPP — 🔗 [Portail WAPP](https://ecowapp.org/) & [Banque Mondiale Énergie](https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P3** · ML Load Forecasting (Panama 40k relevés) — 🔗 [Dataset Kaggle CND Panama](https://www.kaggle.com/datasets/albertovg/electric-load-forecasting-panama) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P4** · Big Data PySpark 3.5 & Hive SQL (321 compteurs × 3 ans) — 🔗 [UCI ML Repository Dataset](https://archive.ics.uci.edu/dataset/321/electricityloaddiagrams20112014) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P5** · Ingestion Satellite NASA POWER & Géostatistique BME — 🔗 [Portail & API NASA POWER](https://power.larc.nasa.gov/) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P6** · Streaming SCADA/PMU 50 Hz (PySpark Structured Streaming) — 🔗 [Standard IEEE C37.118](https://standards.ieee.org/ieee/37.118.1/4766/) & [WAPP CIC](https://ecowapp.org/) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P7** · Economic Dispatch & Prix Marginaux Nodiaux LMP ($/MWh) — 🔗 [ARREC / ERERA](https://erera.arrec.org/) & [Marché WAPP](https://ecowapp.org/) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
         ],
         "🌐 MULTI-SECTEURS (P8–P10)": [
-            "P8 · Industrial IoT : Traitement de Signal FFT & Durée de Vie Restante (RUL)",
-            "P9 · FinTech : Credit Risk Scoring & Détection de Risque de Défaut Bancaire",
-            "P10 · Logistique : Traces GPS Flotte & Optimisation CO2 des Tournées",
+            "**P8** · Industrial IoT : Traitement de Signal FFT & RUL — 🔗 [NASA PCoE Prognostics Data](https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P9** · FinTech : Credit Risk Scoring & Détection de Défaut — 🔗 [UCI German Credit Data](https://archive.ics.uci.edu/dataset/144/statlog+german+credit+data) & [Kaggle Give Me Some Credit](https://www.kaggle.com/c/GiveMeSomeCredit/data) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P10** · Smart Logistics : Traces GPS & Optimisation CO2 — 🔗 [OpenStreetMap](https://www.openstreetmap.org/) & [Microsoft Research GeoLife](https://www.microsoft.com/en-us/research/publication/geolife-gps-trajectory-dataset-user-guide/) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
         ],
         "🌍 AFRIQUE RÉELLE — APIs Gratuites (P11–P13)": [
-            "P11 · Précipitations & Risques Climatiques (Open-Meteo Archive API — Bénin)",
-            "P12 · Paludisme, Santé & Démographie (WHO GHO API + World Bank API)",
-            "P13 · PIB, Pauvreté, Chômage & Développement Durable (World Bank API)",
+            "**P11** · Climat Réel (Précipitations Bénin / CEDEAO) — 🔗 [API Open-Meteo Historical Weather](https://open-meteo.com/en/docs/historical-weather-api) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P12** · Paludisme, Santé & Démographie — 🔗 [API WHO GHO](https://www.who.int/data/gho) & [API World Bank](https://data.worldbank.org/) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P13** · Macro-Économie & Développement Durable — 🔗 [API World Bank Open Data](https://data.worldbank.org/) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
         ]
     }
 
@@ -95,7 +95,7 @@ if menu == "🏠 Accueil & Profil Candidat":
             for item in items:
                 st.markdown(f"- {item}")
 
-    st.success("👈 Naviguez dans le menu latéral pour explorer les 13 projets en détail avec des données réelles !")
+    st.success("👈 Naviguez dans le menu latéral : chaque sous-page contient des boutons de téléchargement direct (.CSV / .JSON) et des liens vers les portails officiels !")
 else:
     fn = PAGES[menu]
     if fn:

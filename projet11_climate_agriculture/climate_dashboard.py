@@ -22,8 +22,20 @@ except ImportError:
 
 def render_projet11():
     st.header("🌧️ Projet 11 : Données Climatiques Réelles (Open-Meteo API) — Précipitations, Sécheresses & Inondations (Bénin / CEDEAO)")
+    
+    st.info("""
+    🔗 **Source & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
+    - **Fournisseur Officiel :** Open-Meteo (*Historical Weather Archive API*)
+    - **Jeu de données :** *Relevés météorologiques journaliers réels 2010–2023 (Précipitations mm, Températures max/min °C, Vitesse du vent) pour les villes du Bénin et d'Afrique de l'Ouest*
+    - **Liens officiels directs :**
+      - 🌐 [Portail Officiel Open-Meteo Weather](https://open-meteo.com/)
+      - 📖 [Documentation de l'API Open-Meteo Historical Weather](https://open-meteo.com/en/docs/historical-weather-api)
+      - 🔌 [Exemple d'Endpoint REST API Direct (JSON Cotonou)](https://archive-api.open-meteo.com/v1/archive?latitude=6.37&longitude=2.35&start_date=2020-01-01&end_date=2023-12-31&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max&timezone=auto)
+    - **Type d'accès :** API REST Publique 100% Gratuite sans clé API requise (Données d'observation & réanalyses ERA5 / DWD).
+    """)
+
     st.markdown("""
-    **Source : [Open-Meteo Archive API](https://open-meteo.com/en/docs/historical-weather-api) ✅ — 100% Gratuit, sans clé API**
+    **Périmètre d'Analyse & Enjeux Métiers :**
     - Séries journalières réelles de **précipitations (mm), température (°C) et vent (km/h)** pour Cotonou, Parakou, Natitingou et les capitales CEDEAO.
     - Analyse des **saisons bimodales des pluies** au Bénin (2 saisons annuelles) et des événements extrêmes (inondations > 50 mm/jour).
     > *💡 Pertinence : ODD 13 – Action Climatique | Agenda 2063 UA | PAG 2 Bénin (Agriculture & Alimentation).*
@@ -47,6 +59,25 @@ def render_projet11():
     if df.empty:
         st.error("Erreur lors de la récupération des données. Vérifiez votre connexion Internet.")
         return
+
+    # Direct Download Buttons
+    col_dl1, col_dl2 = st.columns(2)
+    with col_dl1:
+        st.download_button(
+            f"📥 Télécharger les relevés météo réels {selected_city} (.CSV)",
+            data=df.to_csv(index=False).encode('utf-8'),
+            file_name=f"openmeteo_releves_{selected_city.lower().replace(' ', '_')}.csv",
+            mime="text/csv",
+            key="p11_dl_csv"
+        )
+    with col_dl2:
+        st.download_button(
+            "📥 Télécharger les relevés (.JSON)",
+            data=df.to_json(orient="records", date_format="iso").encode('utf-8'),
+            file_name=f"openmeteo_releves_{selected_city.lower().replace(' ', '_')}.json",
+            mime="application/json",
+            key="p11_dl_json"
+        )
 
     df_annual = df.groupby("annee").agg(
         precip_totale_mm=("precipitation_mm", "sum"),

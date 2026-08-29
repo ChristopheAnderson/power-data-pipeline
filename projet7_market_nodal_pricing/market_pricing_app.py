@@ -24,6 +24,18 @@ except ImportError:
 
 def render_projet7():
     st.header("📊 Projet 7 : Analytics du Marché Régional de l'Électricité (LMP & Economic Dispatch WAPP)")
+    
+    st.info("""
+    🔗 **Sources & Accès aux Données Utilisées (Référentiel Marché Régional CEDEAO) :**
+    - **Fournisseurs Officiels :** ARREC / ERERA (*Autorité de Régulation Régionale du Secteur de l'Électricité de la CEDEAO*), WAPP / EEEOA & IEEE PES
+    - **Jeu de données :** *Paramètres d'Economic Dispatch, Coûts marginaux de génération ($/MWh) et capacités de transit interfrontalier WAPP*
+    - **Liens officiels directs :**
+      - 🌐 [Portail Officiel de l'ARREC / ERERA](https://erera.arrec.org/)
+      - ⚡ [Portail du Marché Régional WAPP / EEEOA](https://ecowapp.org/)
+      - 📚 [IEEE Power Systems Test Case Archive (Benchmark OPF & Dispatch)](https://labs.ece.uw.edu/pstca/)
+    - **Type d'accès :** Données Réglementaires et Modèles de Marché Électrique Régional CEDEAO.
+    """)
+
     st.markdown("""
     **Contexte Régional ARREC / ERERA & WAPP Market** :
     - Modélisation de l'**Economic Dispatch (OPF - Optimal Power Flow)** du marché de gros de l'électricité en Afrique de l'Ouest.
@@ -41,6 +53,25 @@ def render_projet7():
 
     optimizer = WAPPMarketDispatchOptimizer()
     df_market, smp, total_cost = optimizer.solve_economic_dispatch(demand_mw, congestion_penalty)
+
+    # Direct Download Buttons
+    col_dl1, col_dl2 = st.columns(2)
+    with col_dl1:
+        st.download_button(
+            "📥 Télécharger la table d'Economic Dispatch (.CSV)",
+            data=df_market.to_csv(index=False).encode('utf-8'),
+            file_name="wapp_market_economic_dispatch.csv",
+            mime="text/csv",
+            key="p7_dl_csv"
+        )
+    with col_dl2:
+        st.download_button(
+            "📥 Télécharger les données de Marché (.JSON)",
+            data=df_market.to_json(orient="records").encode('utf-8'),
+            file_name="wapp_market_economic_dispatch.json",
+            mime="application/json",
+            key="p7_dl_json"
+        )
 
     # Metrics
     m1, m2, m3, m4 = st.columns(4)

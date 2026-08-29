@@ -8,13 +8,19 @@ import numpy as np
 
 class WAPPMarketDispatchOptimizer:
     def __init__(self):
-        # Offres des centrales de production régionales
+        # Flotte réelle des centrales interconnectées du Pool Énergétique Ouest Africain (WAPP / EEEOA)
         self.generators = [
-            {"node": "Nœud Cotonou (Bénin)", "filiere": "Gaz / IPP Maria Gleta", "capacity_mw": 120, "marginal_cost_usd_mwh": 65.0},
-            {"node": "Nœud Akosombo (Ghana)", "filiere": "Hydraulique Akosombo", "capacity_mw": 500, "marginal_cost_usd_mwh": 25.0},
-            {"node": "Nœud Taabo (Côte d'Ivoire)", "filiere": "Hydraulique / Gaz Mixture", "capacity_mw": 450, "marginal_cost_usd_mwh": 35.0},
-            {"node": "Nœud Egbin (Nigeria)", "filiere": "Gaz Thermique Egbin", "capacity_mw": 800, "marginal_cost_usd_mwh": 45.0},
-            {"node": "Nœud Nagbegou (Burkina)", "filiere": "Solaire + Diesel Backup", "capacity_mw": 100, "marginal_cost_usd_mwh": 90.0}
+            {"node": "Akosombo (Ghana)", "filiere": "Hydraulique Akosombo (VRA)", "capacity_mw": 500, "marginal_cost_usd_mwh": 22.0},
+            {"node": "Kainji / Jebba (Nigeria)", "filiere": "Hydraulique Kainji (TCN)", "capacity_mw": 760, "marginal_cost_usd_mwh": 24.0},
+            {"node": "Soubré / Taabo (Côte d'Ivoire)", "filiere": "Hydraulique Soubré (CI-ENERGIES)", "capacity_mw": 450, "marginal_cost_usd_mwh": 26.0},
+            {"node": "Nangbéto (Bénin / Togo)", "filiere": "Hydraulique Binational (CEB)", "capacity_mw": 65, "marginal_cost_usd_mwh": 28.0},
+            {"node": "Illoulofin (Bénin)", "filiere": "Solaire PV Illoulofin (SBEE)", "capacity_mw": 25, "marginal_cost_usd_mwh": 18.0},
+            {"node": "Zagtouli (Burkina Faso)", "filiere": "Solaire PV Zagtouli (SONABEL)", "capacity_mw": 33, "marginal_cost_usd_mwh": 19.0},
+            {"node": "Azura / Egbin (Nigeria)", "filiere": "Cycle Combiné Gaz (TCN)", "capacity_mw": 1200, "marginal_cost_usd_mwh": 42.0},
+            {"node": "CIPREL / Azito (Côte d'Ivoire)", "filiere": "Turbine Gaz Naturel (CIE)", "capacity_mw": 550, "marginal_cost_usd_mwh": 48.0},
+            {"node": "Kpone (Ghana)", "filiere": "Thermique Gaz / Fioul (GRIDCo)", "capacity_mw": 350, "marginal_cost_usd_mwh": 54.0},
+            {"node": "Maria Gleta (Bénin)", "filiere": "Turbine Gaz Dual-Fuel (SBEE)", "capacity_mw": 127, "marginal_cost_usd_mwh": 65.0},
+            {"node": "ContourGlobal Lomé (Togo)", "filiere": "Thermique Tri-Fuel (CEET)", "capacity_mw": 100, "marginal_cost_usd_mwh": 68.0}
         ]
 
     def solve_economic_dispatch(self, total_regional_demand_mw=1500.0, line_congestion_penalty=5.0):

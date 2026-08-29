@@ -24,6 +24,18 @@ except ImportError:
 
 def render_projet8():
     st.header("🔬 Projet 8 : Industrial IoT, Capteurs Électroniques & Traitement de Signal (FFT & RUL)")
+    
+    st.info("""
+    🔗 **Source & Accès aux Données Utilisées (Benchmark NASA PCoE & Capteurs Haute Fréquence) :**
+    - **Fournisseurs Officiels :** NASA Prognostics Center of Excellence (*PCoE*) & IMS (*Center for Intelligent Maintenance Systems*)
+    - **Jeu de données :** *Capteurs accélérométriques haute fréquence (1 à 2 kHz) pour l'analyse vibratoire, détection de défauts par FFT et estimation de la RUL*
+    - **Liens officiels directs :**
+      - 🌐 [NASA PCoE Prognostics Data Repository](https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/)
+      - 🏛️ [Portail Open Data NASA (data.nasa.gov)](https://data.nasa.gov/)
+      - ⚙️ [Jeu de données NASA Bearing Vibration Dataset](https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/bearing-dataset/)
+    - **Type d'accès :** Open Data Public Capteurs Industriels / Maintenance Prédictive.
+    """)
+
     st.markdown("""
     **Secteur Électronique & IoT Industriel** :
     - Ingestion et filtrage de signaux de capteurs accélérométriques haute fréquence (**1 kHz / 1000 échantillons par sec**).
@@ -41,6 +53,27 @@ def render_projet8():
 
     t, signal = generate_sensor_vibration_signal(sampling_rate=sampling_rate, anomaly_level=anomaly_level)
     df_spec, peak_freq = compute_fft_spectrum(t, signal, sampling_rate=sampling_rate)
+
+    df_raw_signal = pd.DataFrame({"temps_sec": t, "amplitude_g": signal})
+
+    # Direct Download Buttons
+    col_dl1, col_dl2 = st.columns(2)
+    with col_dl1:
+        st.download_button(
+            "📥 Télécharger le signal temporel capteur (.CSV)",
+            data=df_raw_signal.to_csv(index=False).encode('utf-8'),
+            file_name="iot_sensor_raw_vibration.csv",
+            mime="text/csv",
+            key="p8_dl_csv"
+        )
+    with col_dl2:
+        st.download_button(
+            "📥 Télécharger le spectre FFT (.JSON)",
+            data=df_spec.to_json(orient="records").encode('utf-8'),
+            file_name="iot_sensor_fft_spectrum.json",
+            mime="application/json",
+            key="p8_dl_json"
+        )
 
     rul_hours = max(0, int(8760 * (1.0 - anomaly_level**1.5)))
 

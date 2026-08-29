@@ -1,59 +1,70 @@
 # -*- coding: utf-8 -*-
 """
-Projet 4 - PySpark & Hive SQL Distributed Pipeline
+Projet 4 - PySpark & Hive SQL Distributed Pipeline (Pandas Simulation)
 Aggregates high-frequency 15-minute smart meter consumption across 321 clients.
+
+NOTE: This module simulates PySpark behavior using pandas for compatibility
+with Python 3.14+. PySpark officially supports Python 3.8–3.12 only.
+To use real PySpark, set up a separate Python 3.10/3.11 virtual environment.
 """
-from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, avg, max as spark_max, sum as spark_sum, date_trunc
+import pandas as pd
+import numpy as np
 import os
-import sys
+import datetime
+
 
 def run_spark_pipeline(data_file_path=None):
     """
-    Initializes PySpark Session with Hive SQL support and executes distributed query.
+    Simulates a PySpark/Hive SQL distributed pipeline using pandas.
+    Performs the same aggregations (avg, max, group by hour) as the Spark version.
     """
-    print("Initialisation de la session PySpark avec support Hive SQL...")
-    spark = SparkSession.builder \
-        .appName("WAPP_BigData_Power_Analytics") \
-        .config("spark.sql.warehouse.dir", "/user/hive/warehouse") \
-        .config("spark.driver.memory", "2g") \
-        .getOrCreate()
+    print("Initialisation du pipeline distribué (simulation PySpark via pandas)...")
 
-    # Generate synthetic high-volume dataset if file does not exist
+    # --- Load or generate data ---
     if not data_file_path or not os.path.exists(data_file_path):
-        print("Génération d'un échantillon Spark distribué...")
-        data = []
-        import datetime
+        print("Génération d'un échantillon distribué (1 000 lignes × 15 min)...")
         base_time = datetime.datetime(2024, 1, 1, 0, 0)
+        records = []
         for i in range(1000):
-            t_str = (base_time + datetime.timedelta(minutes=15 * i)).strftime("%Y-%m-%d %H:%M:%S")
-            data.append((t_str, float(1.2 + (i % 10) * 0.5), float(2.1 + (i % 7) * 0.3), float(0.8 + (i % 5) * 0.2)))
-        
-        df = spark.createDataFrame(data, ["timestamp", "client_1", "client_2", "client_3"])
+            t = base_time + datetime.timedelta(minutes=15 * i)
+            records.append({
+                "timestamp": t,
+                "client_1": round(1.2 + (i % 10) * 0.5, 4),
+                "client_2": round(2.1 + (i % 7) * 0.3, 4),
+                "client_3": round(0.8 + (i % 5) * 0.2, 4),
+            })
+        df = pd.DataFrame(records)
     else:
-        df = spark.read.option("header", "true").option("delimiter", ";").csv(data_file_path)
+        df = pd.read_csv(data_file_path, sep=";", header=0)
+        df["timestamp"] = pd.to_datetime(df["timestamp"])
+        for col in ["client_1", "client_2", "client_3"]:
+            if col in df.columns:
+                df[col] = pd.to_numeric(df[col], errors="coerce")
 
-    # Register Temp View for Hive SQL
-    df.createOrReplaceTempView("electricity_consumption")
+    # --- Hive SQL equivalent: DATE_TRUNC('hour', ...) ---
+    df["timestamp"] = pd.to_datetime(df["timestamp"])
+    df["heure_mesure"] = df["timestamp"].dt.floor("h")  # equivalent to DATE_TRUNC('hour')
 
-    # Hive SQL Query
-    hive_query = """
-    SELECT 
-        DATE_TRUNC('hour', CAST(timestamp AS TIMESTAMP)) AS heure_mesure,
-        ROUND(AVG(CAST(client_1 AS FLOAT)), 3) AS charge_moyenne_client1_kw,
-        ROUND(MAX(CAST(client_1 AS FLOAT)), 3) AS charge_pointe_client1_kw,
-        ROUND(AVG(CAST(client_2 AS FLOAT)), 3) AS charge_moyenne_client2_kw
-    FROM electricity_consumption
-    GROUP BY heure_mesure
-    ORDER BY heure_mesure DESC
-    """
+    # --- GROUP BY heure_mesure (equivalent to Hive SQL aggregation) ---
+    print("Exécution de l'agrégation Hive SQL (simulation pandas)...")
+    result_df = (
+        df.groupby("heure_mesure")
+        .agg(
+            charge_moyenne_client1_kw=("client_1", "mean"),
+            charge_pointe_client1_kw=("client_1", "max"),
+            charge_moyenne_client2_kw=("client_2", "mean"),
+        )
+        .round(3)
+        .reset_index()
+        .sort_values("heure_mesure", ascending=False)
+    )
 
-    print("Exécution de la requête Hive SQL sous PySpark...")
-    result_df = spark.sql(hive_query)
-    result_df.show(15, truncate=False)
+    print(result_df.head(15).to_string(index=False))
+    print(f"\n[OK] Pipeline execute avec succes -- {len(result_df)} lignes agregees.")
 
-    return result_df.toPandas()
+    return result_df
+
 
 if __name__ == "__main__":
     res = run_spark_pipeline()
-    print("✅ PySpark Pipeline executed successfully.")
+    print("[OK] PySpark Pipeline (pandas simulation) executed successfully.")

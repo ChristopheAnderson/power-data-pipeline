@@ -10,6 +10,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import os
 
+@st.cache_data(ttl=300)
 def load_rte_data():
     url = "https://opendata.reseaux-energies.fr/api/records/1.0/search/"
     params = {
@@ -30,9 +31,20 @@ def load_rte_data():
 
 def render_projet1():
     st.header("⚡ Projet 1 : Pipeline API Données Électriques & Dashboard Temps Réel")
+    
+    st.info("""
+    🔗 **Source & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
+    - **Fournisseur Officiel :** RTE (Réseau de Transport d'Électricité) via le portail *Open Data Réseaux Énergies (ODRE)*
+    - **Jeu de données :** *éCO2mix - Données nationales temps réel de consommation et mix de production électrique*
+    - **Liens officiels directs :**
+      - 🌐 [Portail Officiel Open Data Réseaux Énergies (éCO2mix)](https://opendata.reseaux-energies.fr/explore/dataset/eco2mix-national-tr/information/)
+      - 📥 [Téléchargement direct du Dataset Officiel Complet (CSV ODRE)](https://opendata.reseaux-energies.fr/explore/dataset/eco2mix-national-tr/download/?format=csv&timezone=Europe/Berlin&use_labels_for_header=true)
+      - 🔌 [Endpoint API REST Direct (JSON)](https://opendata.reseaux-energies.fr/api/records/1.0/search/?dataset=eco2mix-national-tr&rows=100)
+    - **Type d'accès :** API REST Publique Gratuite (Format JSON en direct, sans clé d'authentification requise).
+    """)
+
     st.markdown("""
-    **Architecture & Source** :
-    - API Publique RTE éCO2mix (*Open Data Réseaux Énergies*) - 100% Gratuite sans clé API.
+    **Architecture & Traitement** :
     - Ingestion automatisée en JSON, traitement des séries temporelles sous `Pandas` & visualisation réactive avec `Plotly`.
     """)
 
@@ -40,8 +52,27 @@ def render_projet1():
         df = load_rte_data()
 
     if df.empty:
-        st.warning("⚠️ Impossible de récupérer les données en direct. Affichage des données de secours.")
+        st.warning("⚠️ Impossible de récupérer les données en direct de l'API. Affichage des données de secours.")
         return
+
+    # Direct Download Buttons
+    col_dl1, col_dl2 = st.columns(2)
+    with col_dl1:
+        st.download_button(
+            "📥 Télécharger le jeu de données récupéré (.CSV)",
+            data=df.to_csv(index=False).encode('utf-8'),
+            file_name="rte_eco2mix_donnees_reelles.csv",
+            mime="text/csv",
+            key="p1_dl_csv"
+        )
+    with col_dl2:
+        st.download_button(
+            "📥 Télécharger le jeu de données (.JSON)",
+            data=df.to_json(orient="records", date_format="iso").encode('utf-8'),
+            file_name="rte_eco2mix_donnees_reelles.json",
+            mime="application/json",
+            key="p1_dl_json"
+        )
 
     # Cleaning & Processing
     df['date_heure'] = pd.to_datetime(df['date_heure'])

@@ -44,6 +44,17 @@ def get_data_and_model():
 
 def render_projet3():
     st.header("📈 Projet 3 : Machine Learning Load Forecasting (Prévision de Charge Électrique)")
+    
+    st.info("""
+    🔗 **Source & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
+    - **Fournisseurs Officiels :** Centro Nacional de Despacho (CND Panama) / Kaggle Open Datasets
+    - **Jeu de données :** *Electric Load Forecasting Panama (40 000+ relevés horaires réels de demande électrique & météo)*
+    - **Liens officiels directs :**
+      - 🌐 [Jeu de données officiel Kaggle - Electric Load Forecasting Panama](https://www.kaggle.com/datasets/albertovg/electric-load-forecasting-panama)
+      - 🏛️ [Site Officiel du CND Panama (Centro Nacional de Despacho)](https://www.cnd.com.pa/)
+    - **Type d'accès :** Open Data Public CSV (Séries temporelles historiques réelles 2015-2020).
+    """)
+
     st.markdown("""
     **Modélisation Prédictive Métier WAPP (CIC)** :
     - Prévision à court et moyen terme (24h à 7 jours) de la demande électrique nationale/régionale.
@@ -52,6 +63,26 @@ def render_projet3():
     """)
 
     df_raw, artifacts = get_data_and_model()
+
+    # Direct Download Buttons
+    col_dl1, col_dl2 = st.columns(2)
+    with col_dl1:
+        st.download_button(
+            "📥 Télécharger le jeu de données réel Panama Load (.CSV)",
+            data=df_raw.to_csv(index=False).encode('utf-8'),
+            file_name="panama_load_forecasting_dataset.csv",
+            mime="text/csv",
+            key="p3_dl_csv"
+        )
+    with col_dl2:
+        st.download_button(
+            "📥 Télécharger les données (.JSON)",
+            data=df_raw.head(1000).to_json(orient="records", date_format="iso").encode('utf-8'),
+            file_name="panama_load_forecasting_dataset.json",
+            mime="application/json",
+            key="p3_dl_json"
+        )
+
     model = artifacts["model"]
     metrics = artifacts["metrics"]
     feature_cols = artifacts["feature_cols"]

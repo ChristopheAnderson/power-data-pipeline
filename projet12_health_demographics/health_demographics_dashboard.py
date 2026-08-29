@@ -24,10 +24,20 @@ except ImportError:
 
 def render_projet12():
     st.header("🏥 Projet 12 : Santé Publique, Paludisme & Démographie (API WHO GHO + World Bank — Données Réelles)")
+    
+    st.info("""
+    🔗 **Sources & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
+    - **Fournisseurs Officiels :** Organisation Mondiale de la Santé (*WHO GHO API*) & Banque Mondiale (*World Bank Open Data*)
+    - **Jeux de données & Liens directs :**
+      - 🦟 *Incidence du paludisme, espérance de vie & mortalité* : [Portail WHO Global Health Observatory](https://www.who.int/data/gho) | [Documentation WHO GHO OData API](https://www.who.int/data/gho/info/gho-odata-api) | [🔌 Endpoint API WHO Malaria](https://ghoapi.azureedge.net/api/MALARIA002)
+      - 👥 *Démographie, population totale et fécondité* : [Portail World Bank (SP.POP.TOTL)](https://data.worldbank.org/indicator/SP.POP.TOTL) | [📥 Téléchargement Direct CSV (World Bank)](https://api.worldbank.org/v2/en/indicator/SP.POP.TOTL?downloadformat=csv)
+    - **Type d'accès :** APIs REST / OData Publiques 100% Gratuites sans clé API requise.
+    """)
+
     st.markdown("""
-    **Sources Open Data Réelles (100% gratuites, sans clé API) :**
-    - 🦟 **WHO GHO API** : `https://ghoapi.azureedge.net/api/` — Paludisme, mortalité infantile, espérance de vie.
-    - 📊 **World Bank API** : `https://api.worldbank.org/v2/` — Population, PIB, pauvreté, accès aux soins.
+    **Périmètre d'Analyse & Enjeux Métiers :**
+    - Suivi de la charge épidémiologique du paludisme (cas pour 1 000 hab.) dans l'espace CEDEAO.
+    - Analyse de la dynamique démographique et de l'accès aux soins de santé primaires.
     > *💡 Pertinence : ODD 3 (Bonne Santé) | PAG 2 Bénin (Santé) | CEDEAO Plan Santé 2021–2025.*
     """)
 
@@ -55,6 +65,24 @@ def render_projet12():
             df_malaria_all = pd.concat(dfs_malaria, ignore_index=True)
             df_malaria_all['annee'] = df_malaria_all['annee'].astype(int)
             df_malaria_all['incidence_paludisme_1000'] = pd.to_numeric(df_malaria_all['incidence_paludisme_1000'], errors='coerce')
+
+            col_m1, col_m2 = st.columns(2)
+            with col_m1:
+                st.download_button(
+                    "📥 Télécharger les données réelles Paludisme WHO (.CSV)",
+                    data=df_malaria_all.to_csv(index=False).encode('utf-8'),
+                    file_name="who_malaria_incidence_cedeao.csv",
+                    mime="text/csv",
+                    key="p12_malaria_csv"
+                )
+            with col_m2:
+                st.download_button(
+                    "📥 Télécharger les données (.JSON)",
+                    data=df_malaria_all.to_json(orient="records").encode('utf-8'),
+                    file_name="who_malaria_incidence_cedeao.json",
+                    mime="application/json",
+                    key="p12_malaria_json"
+                )
 
             # Metrics for Benin
             df_ben = df_malaria_all[df_malaria_all['pays_code'] == 'BEN']
@@ -85,6 +113,24 @@ def render_projet12():
 
         if not df_pop.empty:
             df_pop['valeur_m'] = df_pop['valeur'] / 1_000_000
+
+            col_pop1, col_pop2 = st.columns(2)
+            with col_pop1:
+                st.download_button(
+                    "📥 Télécharger les données Démographie CEDEAO (.CSV)",
+                    data=df_pop.to_csv(index=False).encode('utf-8'),
+                    file_name="world_bank_population_cedeao.csv",
+                    mime="text/csv",
+                    key="p12_pop_csv"
+                )
+            with col_pop2:
+                st.download_button(
+                    "📥 Télécharger les données (.JSON)",
+                    data=df_pop.to_json(orient="records").encode('utf-8'),
+                    file_name="world_bank_population_cedeao.json",
+                    mime="application/json",
+                    key="p12_pop_json"
+                )
             
             df_benin_pop = df_pop[df_pop['pays_code'] == 'BEN'].sort_values('annee')
             if not df_benin_pop.empty:
@@ -127,6 +173,25 @@ def render_projet12():
             df_poverty = fetch_world_bank_indicator("SI.POV.DDAY")
             df_access_elec = fetch_world_bank_indicator("EG.ELC.ACCS.ZS")
             df_unem = fetch_world_bank_indicator("SL.UEM.TOTL.ZS")
+
+        if not df_poverty.empty:
+            col_soc1, col_soc2 = st.columns(2)
+            with col_soc1:
+                st.download_button(
+                    "📥 Télécharger les données Pauvreté CEDEAO (.CSV)",
+                    data=df_poverty.to_csv(index=False).encode('utf-8'),
+                    file_name="world_bank_pauvrete_cedeao.csv",
+                    mime="text/csv",
+                    key="p12_pov_csv"
+                )
+            with col_soc2:
+                st.download_button(
+                    "📥 Télécharger les données (.JSON)",
+                    data=df_poverty.to_json(orient="records").encode('utf-8'),
+                    file_name="world_bank_pauvrete_cedeao.json",
+                    mime="application/json",
+                    key="p12_pov_json"
+                )
 
         col_pov, col_elec = st.columns(2)
 
