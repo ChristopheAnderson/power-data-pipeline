@@ -192,5 +192,5 @@ def render_projet5():
                 st.error("Impossible de contacter le serveur NASA. Vérifiez votre connexion.")
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="WAPP - Projet 5 Géospatial Solaire", layout="wide")
+    st.set_page_config(page_title="PowerGrid - Projet 5 Géospatial Solaire", layout="wide")
     render_projet5()

@@ -164,5 +164,5 @@ def render_projet1():
     st.dataframe(df[['date_heure', 'consommation', 'nucleaire', 'eolien', 'solaire', 'hydraulique', 'gaz']].head(15), use_container_width=True)
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="WAPP - Projet 1 RTE API", layout="wide")
+    st.set_page_config(page_title="PowerGrid - Projet 1 RTE API", layout="wide")
     render_projet1()

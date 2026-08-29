@@ -150,5 +150,5 @@ def render_projet3():
     st.plotly_chart(fig_imp, use_container_width=True)
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="WAPP - Projet 3 ML Load Forecast", layout="wide")
+    st.set_page_config(page_title="PowerGrid - Projet 3 ML Load Forecast", layout="wide")
     render_projet3()

@@ -127,5 +127,5 @@ def render_projet4():
     st.dataframe(pd.DataFrame(perf_data), use_container_width=True)
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="WAPP - Projet 4 PySpark Big Data", layout="wide")
+    st.set_page_config(page_title="PowerGrid - Projet 4 PySpark Big Data", layout="wide")
     render_projet4()

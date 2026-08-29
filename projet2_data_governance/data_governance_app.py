@@ -206,5 +206,5 @@ def render_projet2():
         st.dataframe(df_wb, use_container_width=True)
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="WAPP - Projet 2 Qualité & Données WAPP", layout="wide")
+    st.set_page_config(page_title="PowerGrid - Projet 2 Gouvernance & Qualité Données", layout="wide")
     render_projet2()

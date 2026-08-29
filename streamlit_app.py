@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-PORTAIL MULTI-PROJETS DATA ENGINEERING & ANALYTICS (13 Projets — Énergie + Multi-Secteurs + Afrique)
-Candidat : Christophe WAVOEKE (Ingénieur Bac+5 Modélisation Mathématique & Informatique)
+PLATEFORME D'INGÉNIERIE DE DONNÉES & ANALYTICS RÉSEAUX ÉNERGÉTIQUES (13 Modules)
+Lead Engineer : Christophe WAVOEKE (Ingénieur Modélisation Mathématique & Informatique / Data Systems)
 """
 import streamlit as st
 import sys, os
@@ -22,50 +22,50 @@ from projet12_health_demographics.health_demographics_dashboard import render_pr
 from projet13_economy_development.economy_development_dashboard import render_projet13
 
 st.set_page_config(
-    page_title="Data Portfolio 13 Projets - Christophe WAVOEKE",
+    page_title="Power Grid & Multi-Sector Data Engineering Platform",
     page_icon="⚡", layout="wide", initial_sidebar_state="expanded"
 )
 
 st.sidebar.image("https://img.icons8.com/color/96/lightning-bolt.png", width=60)
-st.sidebar.title("⚡ Portfolio 13 Projets")
-st.sidebar.markdown("**Christophe WAVOEKE**  \nIngénieur Bac+5 Modélisation & Data")
+st.sidebar.title("⚡ PowerGrid & Data Suite")
+st.sidebar.markdown("**Christophe WAVOEKE**  \nIngénieur Modélisation & Data Systems")
 st.sidebar.markdown("---")
-st.sidebar.caption("🔵 Projets Énergie & Réseau")
-st.sidebar.caption("🟢 Projets Multi-Secteurs")
-st.sidebar.caption("🟡 Projets Afrique Réelle (APIs)")
+st.sidebar.caption("🔵 Énergie & Réseaux Électriques")
+st.sidebar.caption("🟢 Big Data & Multi-Secteurs")
+st.sidebar.caption("🟡 Données & Indicateurs Régionaux")
 
 PAGES = {
-    "🏠 Accueil & Profil Candidat": None,
+    "🏠 Vue d'ensemble de la Plateforme": None,
     # --- ÉNERGIE ---
     "⚡ P1 : Pipeline API RTE (Temps Réel)": render_projet1,
-    "🛡️ P2 : Qualité & Données WAPP (CEDEAO)": render_projet2,
+    "🛡️ P2 : Qualité & Gouvernance Données Énergie": render_projet2,
     "📈 P3 : Prévision ML (Load Forecasting)": render_projet3,
     "🐘 P4 : Big Data PySpark & Hive SQL": render_projet4,
     "🌍 P5 : Satellite Géospatiale (NASA POWER)": render_projet5,
     "📡 P6 : Streaming Temps Réel PMU/SCADA": render_projet6,
-    "📊 P7 : Marché Nodal WAPP (LMP $/MWh)": render_projet7,
+    "📊 P7 : Marché Nodal & Dispatch Économique": render_projet7,
     # --- MULTI-SECTEURS ---
     "🔬 P8 : IoT & Capteurs Électroniques (FFT)": render_projet8,
     "💳 P9 : FinTech & Credit Risk Scoring": render_projet9,
     "🚚 P10 : Smart Logistics & Supply Chain": render_projet10,
     # --- AFRIQUE RÉELLE (APIS) ---
-    "🌧️ P11 : Climat Réel (Open-Meteo API — Bénin)": render_projet11,
+    "🌧️ P11 : Climat & Précipitations (Open-Meteo API)": render_projet11,
     "🏥 P12 : Santé & Démographie (WHO GHO + World Bank)": render_projet12,
     "📊 P13 : Économie & Développement (World Bank API)": render_projet13,
 }
 
 menu = st.sidebar.radio("Navigation :", list(PAGES.keys()))
 st.sidebar.markdown("---")
-st.sidebar.info("✉️ christophewavoeke18@gmail.com  \n📞 +229 01 66 81 83 76  \n🌐 [Portfolio](https://christopher-portofolio.vercel.app/)  \n🐱 [GitHub](https://github.com/christopher-wavoeke/wapp-power-data-pipeline)")
+st.sidebar.info("✉️ christophewavoeke18@gmail.com  \n📞 +229 01 66 81 83 76  \n🌐 [Portfolio](https://christopher-portofolio.vercel.app/)  \n🐱 [GitHub Repository](https://github.com/ChristopheAnderson/energy-grid-data-platform)")
 
-if menu == "🏠 Accueil & Profil Candidat":
-    st.title("⚡ Portfolio Data — 13 Projets : Énergie, Multi-Secteurs & Afrique")
-    st.subheader("Christophe WAVOEKE | Ingénieur Bac+5 ENSGMM — Major de Promotion 2023")
+if menu == "🏠 Vue d'ensemble de la Plateforme":
+    st.title("⚡ Power Grid & Multi-Sector Data Engineering Platform")
+    st.subheader("Architecture de Traitement, Big Data, Streaming SCADA & Optimisation Énergétique")
 
     st.markdown("""
-    Ce portail démontre **13 projets d'ingénierie de données** réels et fonctionnels,
-    couvrant les secteurs **Énergie** (WAPP), **Big Data**, **IoT / Électronique**,
-    **FinTech**, **Logistique** et les **réalités sociales et économiques de l'Afrique de l'Ouest**.
+    Cette suite applicative intègre **13 pipelines de données et modules d'analyse avancée** en production,
+    couvrant la **gestion des réseaux électriques interconnectés**, le **Big Data**, les **flux IoT / Télémétrie**,
+    la **FinTech**, la **Logistique** et les **indicateurs socio-économiques régionaux**.
     """)
 
     categories = {

@@ -123,5 +123,5 @@ def render_projet6():
     st.dataframe(df_pmu[['timestamp', 'substation', 'frequence_hz', 'tension_kv', 'angle_phase_deg', 'status']].head(15), use_container_width=True)
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="WAPP - Projet 6 Streaming PMU", layout="wide")
+    st.set_page_config(page_title="PowerGrid - Projet 6 Streaming PMU", layout="wide")
     render_projet6()

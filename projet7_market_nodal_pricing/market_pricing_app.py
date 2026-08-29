@@ -114,5 +114,5 @@ def render_projet7():
     st.dataframe(df_market[['node', 'filiere', 'capacity_mw', 'marginal_cost_usd_mwh', 'dispatched_mw', 'unit_load_pct', 'nodal_lmp_usd_mwh']], use_container_width=True)
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="WAPP - Projet 7 Marché Nodal LMP", layout="wide")
+    st.set_page_config(page_title="PowerGrid - Projet 7 Marché Nodal LMP", layout="wide")
     render_projet7()

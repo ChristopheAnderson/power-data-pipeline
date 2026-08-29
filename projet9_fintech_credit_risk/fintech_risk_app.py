@@ -129,5 +129,5 @@ def render_projet9():
     st.dataframe(df_fin[['client_id', 'age', 'revenu_annuel_usd', 'montant_credit_usd', 'ratio_endettement_pct', 'retards_paiement_mois', 'probabilite_defaut_pct', 'decision_credit']].head(15), use_container_width=True)
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="WAPP - Projet 9 FinTech Risk Scoring", layout="wide")
+    st.set_page_config(page_title="PowerGrid - Projet 9 FinTech Risk Scoring", layout="wide")
     render_projet9()

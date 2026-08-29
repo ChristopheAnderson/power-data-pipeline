@@ -126,5 +126,5 @@ def render_projet10():
     st.dataframe(df_opt, use_container_width=True)
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="WAPP - Projet 10 Supply Chain Logistics", layout="wide")
+    st.set_page_config(page_title="PowerGrid - Projet 10 Supply Chain Logistics", layout="wide")
     render_projet10()

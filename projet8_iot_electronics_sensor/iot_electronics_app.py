@@ -103,5 +103,5 @@ def render_projet8():
     st.dataframe(df_spec.sort_values("amplitude", ascending=False).head(10), use_container_width=True)
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="WAPP - Projet 8 IoT & Électronique", layout="wide")
+    st.set_page_config(page_title="PowerGrid - Projet 8 IoT & Électronique", layout="wide")
     render_projet8()
