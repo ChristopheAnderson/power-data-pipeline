@@ -77,11 +77,20 @@ PAGES = {
     "🌧️ P11 : Climat & Précipitations (Open-Meteo API)": render_projet11,
     "🏥 P12 : Santé & Démographie (WHO GHO + World Bank)": render_projet12,
     "📊 P13 : Économie & Développement (World Bank API)": render_projet13,
-}
+default_index = 0
+try:
+    page_param = st.query_params.get("page", "").lower()
+    if page_param:
+        for idx, p_name in enumerate(PAGES.keys()):
+            if page_param in p_name.lower():
+                default_index = idx
+                break
+except Exception:
+    pass
 
-menu = st.sidebar.radio("Navigation :", list(PAGES.keys()))
+menu = st.sidebar.radio("Navigation :", list(PAGES.keys()), index=default_index)
 st.sidebar.markdown("---")
-st.sidebar.info("✉️ christophewavoeke18@gmail.com  \n📞 +229 01 66 81 83 76  \n🌐 [Portfolio](https://christopher-portofolio.vercel.app/)  \n🐱 [GitHub Repository](https://github.com/ChristopheAnderson/energy-grid-data-platform)")
+st.sidebar.info("✉️ christophewavoeke18@gmail.com  \n📞 +229 01 66 81 83 76  \n🌐 [Portfolio](https://christopher-portofolio.vercel.app/)  \n🐱 [GitHub Repository](https://github.com/ChristopheAnderson/power-data-pipeline)")
 
 if menu == "🏠 Vue d'ensemble de la Plateforme":
     st.title("⚡ Power Grid & Multi-Sector Data Engineering Platform")
