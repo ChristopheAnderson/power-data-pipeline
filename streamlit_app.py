@@ -26,7 +26,19 @@ st.set_page_config(
     page_icon="⚡", layout="wide", initial_sidebar_state="expanded"
 )
 
-st.sidebar.image("https://img.icons8.com/color/96/lightning-bolt.png", width=60)
+# --- PHOTO DE PROFIL DANS LA BARRE LATÉRALE ---
+PROFILE_PIC_PATH = None
+for path in ["assets/profile.jpg", "assets/profile.png", "assets/profile.jpeg", "profile.jpg", "profile.png"]:
+    if os.path.exists(os.path.join(os.path.dirname(__file__), path)):
+        PROFILE_PIC_PATH = os.path.join(os.path.dirname(__file__), path)
+        break
+
+if PROFILE_PIC_PATH:
+    st.sidebar.image(PROFILE_PIC_PATH, width=120)
+else:
+    # URL de photo de profil par défaut ou avatar
+    st.sidebar.image("https://raw.githubusercontent.com/ChristopheAnderson/energy-grid-data-platform/main/assets/profile.jpg", width=120, fallback="https://img.icons8.com/color/96/user-female-circle.png")
+
 st.sidebar.title("⚡ PowerGrid & Data Suite")
 st.sidebar.markdown("**Christophe WAVOEKE**  \nIngénieur Modélisation & Data Systems")
 st.sidebar.markdown("---")
