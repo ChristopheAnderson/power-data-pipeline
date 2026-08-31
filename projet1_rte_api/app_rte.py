@@ -160,6 +160,96 @@ def render_projet1():
         ))
         st.plotly_chart(fig_gauge, use_container_width=True)
 
+    st.markdown("---")
+    
+    # 🔬 SECTION MODÉLISATION MATHÉMATIQUE & FORMULATION ANALYTIQUE
+    st.subheader("🔬 Étude Mathématique Approfondie & Modélisation Analytique")
+    
+    st.markdown(r"""
+    En tant qu'**Ingénieur en Modélisation Mathématique**, l'observation des séries temporelles électriques nécessite d'extraire la structure sous-jacente par décomposition spectrale et régression analytique.
+    
+    #### 1. Modèle Harmonique de Fourier pour la Dynamique de Charge
+    La demande électrique $P_{\text{load}}(t)$ est un processus pseudo-périodique décomposable en série de Fourier tronquée d'ordre $K=2$ (fondamentale journalière $T=24\text{ h}$ et harmonique $12\text{ h}$) :
+    $$P_{\text{load}}(t) = a_0 + a_1 \cos\left(\frac{2\pi t}{24}\right) + b_1 \sin\left(\frac{2\pi t}{24}\right) + a_2 \cos\left(\frac{4\pi t}{24}\right) + b_2 \sin\left(\frac{4\pi t}{24}\right) + \epsilon(t)$$
+    où $\epsilon(t) \sim \mathcal{N}(0, \sigma^2)$ représente le résidu stochastique résiduel.
+    """)
+    
+    # Dynamic Math Modeling Calculation
+    try:
+        import numpy as np
+        
+        # Sort chronologically for time series modeling
+        df_sort = df.sort_values('date_heure').copy()
+        if len(df_sort) >= 10:
+            df_sort['t_hours'] = (df_sort['date_heure'] - df_sort['date_heure'].min()).dt.total_seconds() / 3600.0
+            t = df_sort['t_hours'].values
+            y = df_sort['consommation'].values
+            
+            # Design Matrix for Fourier Regression (K=2)
+            omega = 2 * np.pi / 24.0
+            X_mat = np.column_stack([
+                np.ones_like(t),
+                np.cos(omega * t),
+                np.sin(omega * t),
+                np.cos(2 * omega * t),
+                np.sin(2 * omega * t)
+            ])
+            
+            # Ordinary Least Squares (OLS): beta = (X^T X)^(-1) X^T y
+            beta, residuals, rank, s = np.linalg.lstsq(X_mat, y, rcond=None)
+            y_pred = X_mat @ beta
+            
+            # Goodness-of-fit metrics
+            ss_res = np.sum((y - y_pred) ** 2)
+            ss_tot = np.sum((y - np.mean(y)) ** 2)
+            r2 = 1.0 - (ss_res / (ss_tot + 1e-8))
+            rmse = np.sqrt(np.mean((y - y_pred) ** 2))
+            mae = np.mean(np.abs(y - y_pred))
+            mape = np.mean(np.abs((y - y_pred) / (y + 1e-8))) * 100.0
+            
+            # Display Math KPIs
+            kpi_col1, kpi_col2, kpi_col3, kpi_col4, kpi_col5 = st.columns(5)
+            kpi_col1.metric("Intercept Moyen $a_0$", f"{beta[0]:,.0f} MW")
+            kpi_col2.metric("Qualité d'Ajustement $R^2$", f"{max(0.0, r2):.4f}")
+            kpi_col3.metric("Erreur $RMSE$", f"{rmse:.2f} MW")
+            kpi_col4.metric("Erreur $MAE$", f"{mae:.2f} MW")
+            kpi_col5.metric("Erreur Relative $MAPE$", f"{mape:.2f} %")
+            
+            df_sort['Ajustement_Fourier_Analytique'] = y_pred
+            
+            fig_model = go.Figure()
+            fig_model.add_trace(go.Scatter(
+                x=df_sort['date_heure'], y=df_sort['consommation'],
+                mode='markers+lines', name='Données Réelles Observées $P(t)$',
+                line=dict(color='#1E3A8A', width=2)
+            ))
+            fig_model.add_trace(go.Scatter(
+                x=df_sort['date_heure'], y=df_sort['Ajustement_Fourier_Analytique'],
+                mode='lines', name='Modèle Analytique OLS $\hat{P}(t)$',
+                line=dict(color='#EF4444', width=3, dash='dash')
+            ))
+            fig_model.update_layout(
+                title="Ajustement Analytique du Modèle de Fourier sur la Série Temporelle de Charge",
+                xaxis_title="Horodatage",
+                yaxis_title="Puissance (MW)",
+                hovermode="x unified"
+            )
+            st.plotly_chart(fig_model, use_container_width=True)
+            
+            st.markdown(r"""
+            #### 2. Formule Analytique Identifiée par Moindres Carrés Ordinaires :
+            """)
+            st.latex(f"\\hat{{P}}(t) = {beta[0]:.1f} + {beta[1]:.1f}\\cos(\\omega t) + {beta[2]:.1f}\\sin(\\omega t) + {beta[3]:.1f}\\cos(2\\omega t) + {beta[4]:.1f}\\sin(2\\omega t)")
+            
+            st.markdown(r"""
+            #### 3. Formulation de l'Intensité Carbone Moyenne Pondérée :
+            $$I_{\text{CO}_2}(t) = \frac{\sum_{i=1}^M \gamma_i \cdot P_i(t)}{\sum_{i=1}^M P_i(t)} \quad \left[\text{gCO}_2/\text{kWh}\right]$$
+            Ce modèle garantit l'évaluation en continu de l'impact environnemental du mix régional WAPP.
+            """)
+    except Exception as e:
+        st.warning(f"Note de calcul analytique: {e}")
+
+    st.markdown("---")
     st.subheader("📋 Extraits des Données Brut Ingestées (API RTE)")
     st.dataframe(df[['date_heure', 'consommation', 'nucleaire', 'eolien', 'solaire', 'hydraulique', 'gaz']].head(15), use_container_width=True)
 
