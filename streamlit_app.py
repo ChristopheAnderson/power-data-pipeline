@@ -59,8 +59,51 @@ st.sidebar.caption("🔵 Énergie & Réseaux Électriques")
 st.sidebar.caption("🟢 Big Data & Multi-Secteurs")
 st.sidebar.caption("🟡 Données & Indicateurs Régionaux")
 
+import streamlit.components.v1 as components
+
+def render_cv():
+    st.markdown("## 📄 Curriculum Vitæ Exécutif — Christophe WAVOEKE")
+    st.markdown("**Ingénieur Modélisation Mathématique & Informatique | Data Systems & Big Data**")
+    
+    cv_dir = os.path.join(os.path.dirname(__file__), "assets")
+    cv_pdf_path = os.path.join(cv_dir, "cv.pdf")
+    cv_html_path = os.path.join(cv_dir, "cv.html")
+    
+    col1, col2, col3 = st.columns([1.5, 1.5, 3])
+    with col1:
+        if os.path.exists(cv_pdf_path):
+            with open(cv_pdf_path, "rb") as f:
+                st.download_button(
+                    label="📥 Télécharger le CV (PDF Officiel 2 Pages)",
+                    data=f.read(),
+                    file_name="CV_Christophe_WAVOEKE_Data_Analyst_BI.pdf",
+                    mime="application/pdf",
+                    use_container_width=True
+                )
+    with col2:
+        if os.path.exists(cv_html_path):
+            with open(cv_html_path, "r", encoding="utf-8") as f:
+                html_data = f.read()
+            st.download_button(
+                label="🌐 Télécharger la Version HTML Standalone",
+                data=html_data,
+                file_name="CV_Christophe_WAVOEKE_Data_Analyst_BI.html",
+                mime="text/html",
+                use_container_width=True
+            )
+    with col3:
+        st.info("💡 **Aperçu haute fidélité :** Le CV interactif complet est navigable ci-dessous avec tous les liens vers les démonstrateurs et dépôts GitHub.")
+
+    if os.path.exists(cv_html_path):
+        with open(cv_html_path, "r", encoding="utf-8") as f:
+            raw_html = f.read()
+        components.html(raw_html, height=1250, scrolling=True)
+    else:
+        st.error("Le fichier du CV HTML est introuvable dans le dossier assets.")
+
 PAGES = {
     "🏠 Vue d'ensemble de la Plateforme": None,
+    "📄 Curriculum Vitæ (CV Exécutif)": render_cv,
     # --- ÉNERGIE ---
     "⚡ P1 : Pipeline API RTE (Temps Réel)": render_projet1,
     "🛡️ P2 : Qualité & Gouvernance Données Énergie": render_projet2,
@@ -92,7 +135,7 @@ except Exception:
 
 menu = st.sidebar.radio("Navigation :", list(PAGES.keys()), index=default_index)
 st.sidebar.markdown("---")
-st.sidebar.info("✉️ christophewavoeke18@gmail.com  \n📞 +229 01 66 81 83 76  \n🌐 [Portfolio](https://christopher-portofolio.vercel.app/)  \n🐱 [GitHub Repository](https://github.com/ChristopheAnderson/power-data-pipeline)")
+st.sidebar.info("✉️ christophewavoeke18@gmail.com  \n📞 +229 01 66 81 83 76  \n🌐 [Portfolio Web](https://christopher-portofolio.vercel.app/)  \n📊 [Démonstrateurs Data Analytics & BI](https://data-analytics-bi-portfolio-ek57rbdepycxrx94gjvdv8.streamlit.app/)  \n🐱 [GitHub Repository](https://github.com/ChristopheAnderson/power-data-pipeline)")
 
 if menu == "🏠 Vue d'ensemble de la Plateforme":
     st.title("⚡ Power Grid & Multi-Sector Data Engineering Platform")
@@ -103,6 +146,9 @@ if menu == "🏠 Vue d'ensemble de la Plateforme":
     couvrant la **gestion des réseaux électriques interconnectés**, le **Big Data**, les **flux IoT / Télémétrie**,
     la **FinTech**, la **Logistique** et les **indicateurs socio-économiques régionaux**.
     """)
+
+    st.info("📄 **Curriculum Vitæ Exécutif :** Consultez l'onglet **« 📄 Curriculum Vitæ (CV Exécutif) »** dans le menu latéral pour visualiser le profil complet en format interactif ou télécharger le PDF officiel 2 pages.")
+
 
     categories = {
         "⚡ ÉNERGIE & RÉSEAU (P1–P7)": [
