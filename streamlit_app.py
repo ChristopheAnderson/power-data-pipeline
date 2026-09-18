@@ -26,6 +26,70 @@ st.set_page_config(
     page_icon="⚡", layout="wide", initial_sidebar_state="expanded"
 )
 
+# --- CSS DE GESTION DE LA BARRE LATÉRALE REPLIABLE ---
+st.markdown("""
+<style>
+    /* Bouton de fermeture de la barre latérale toujours visible et stylisé */
+    [data-testid="stSidebarCollapseButton"] {
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: flex !important;
+    }
+    [data-testid="stSidebarCollapseButton"] button {
+        opacity: 1 !important;
+        visibility: visible !important;
+        background: rgba(0, 212, 255, 0.12) !important;
+        color: #00D4FF !important;
+        border: 1px solid rgba(0, 212, 255, 0.5) !important;
+        border-radius: 6px !important;
+        padding: 4px 10px !important;
+        font-weight: 600 !important;
+        transition: all 0.2s ease !important;
+        box-shadow: 0 1px 6px rgba(0, 212, 255, 0.25) !important;
+    }
+    [data-testid="stSidebarCollapseButton"] button:hover {
+        background: #00D4FF !important;
+        color: #0b1120 !important;
+        border-color: #00D4FF !important;
+        transform: scale(1.05) !important;
+    }
+    [data-testid="stSidebarCollapseButton"] button::after {
+        content: " Masquer";
+        font-size: 11px;
+        font-weight: 600;
+        margin-left: 3px;
+    }
+
+    /* Bouton pour rouvrir la barre latérale repliée */
+    [data-testid="stSidebarCollapsedControl"] {
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: flex !important;
+    }
+    [data-testid="stSidebarCollapsedControl"] button {
+        background: #0b1120 !important;
+        color: #00D4FF !important;
+        border: 1px solid #00D4FF !important;
+        border-radius: 0 8px 8px 0 !important;
+        padding: 6px 12px !important;
+        font-weight: 600 !important;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.4) !important;
+        transition: all 0.2s ease !important;
+    }
+    [data-testid="stSidebarCollapsedControl"] button:hover {
+        background: #1e293b !important;
+        color: #38bdf8 !important;
+        transform: scale(1.05) !important;
+    }
+    [data-testid="stSidebarCollapsedControl"] button::after {
+        content: " Menu";
+        font-size: 11px;
+        font-weight: 600;
+        margin-left: 3px;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # --- PHOTO DE PROFIL DANS LA BARRE LATÉRALE (RONDE & CENTRÉE) ---
 PROFILE_PIC_PATH = None
 for path in ["assets/profile.jpg", "assets/profile.png", "assets/profile.jpeg", "profile.jpg", "profile.png"]:
@@ -58,6 +122,7 @@ st.sidebar.markdown("---")
 st.sidebar.caption("🔵 Énergie & Réseaux Électriques")
 st.sidebar.caption("🟢 Big Data & Multi-Secteurs")
 st.sidebar.caption("🟡 Données & Indicateurs Régionaux")
+st.sidebar.info("💡 **Affichage large :** Cliquez sur **« Masquer** en haut à droite pour replier ce menu et afficher les graphiques en pleine largeur.")
 
 import streamlit.components.v1 as components
 
