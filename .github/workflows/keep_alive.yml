@@ -1,15 +1,18 @@
-name: Keep Streamlit App Awake
+name: Keep Streamlit Apps Awake
 
 on:
   schedule:
-    - cron: '*/20 * * * *'
+    - cron: '0 */4 * * *'
   workflow_dispatch:
 
 jobs:
-  ping:
+  keep-alive:
     runs-on: ubuntu-latest
     steps:
-      - name: Wake up Streamlit Cloud application
-        run: |
-          curl -s -L -A "Mozilla/5.0" "https://power-data-pipeline-bqhbx2x3rta7odtqusg8bb.streamlit.app/" > /dev/null
-          curl -s -L -A "Mozilla/5.0" "https://power-data-pipeline-bqhbx2x3rta7odtqusg8bb.streamlit.app/_stcore/health" || true
+      - name: Wake up Streamlit apps
+        uses: gpenessot/streamlit-keep-alive@v1
+        with:
+          app-urls: |
+            https://data-analytics-bi-portfolio-ek57rbdepycxrx94gjvdv8.streamlit.app/
+            https://power-data-pipeline-bqhbx2x3rta7odtqusg8bb.streamlit.app/
+          timeout: 120
