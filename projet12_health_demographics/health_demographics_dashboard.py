@@ -23,14 +23,14 @@ except ImportError:
         fetch_world_bank_indicator, CEDEAO_COUNTRIES)
 
 def render_projet12():
-    st.header("🏥 Projet 12 : Santé Publique, Paludisme & Démographie (API WHO GHO + World Bank — Données Réelles)")
+    st.header("Projet 12 : Santé Publique, Paludisme & Démographie (API WHO GHO + World Bank — Données Réelles)")
     
     st.info("""
-    🔗 **Sources & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
+    **Sources & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
     - **Fournisseurs Officiels :** Organisation Mondiale de la Santé (*WHO GHO API*) & Banque Mondiale (*World Bank Open Data*)
     - **Jeux de données & Liens directs :**
-      - 🦟 *Incidence du paludisme, espérance de vie & mortalité* : [Portail WHO Global Health Observatory](https://www.who.int/data/gho) | [Documentation WHO GHO OData API](https://www.who.int/data/gho/info/gho-odata-api) | [🔌 Endpoint API WHO Malaria](https://ghoapi.azureedge.net/api/MALARIA002)
-      - 👥 *Démographie, population totale et fécondité* : [Portail World Bank (SP.POP.TOTL)](https://data.worldbank.org/indicator/SP.POP.TOTL) | [📥 Téléchargement Direct CSV (World Bank)](https://api.worldbank.org/v2/en/indicator/SP.POP.TOTL?downloadformat=csv)
+      - *Incidence du paludisme, espérance de vie & mortalité* : [Portail WHO Global Health Observatory](https://www.who.int/data/gho) | [Documentation WHO GHO OData API](https://www.who.int/data/gho/info/gho-odata-api) | [Endpoint API WHO Malaria](https://ghoapi.azureedge.net/api/MALARIA002)
+      - *Démographie, population totale et fécondité* : [Portail World Bank (SP.POP.TOTL)](https://data.worldbank.org/indicator/SP.POP.TOTL) | [Téléchargement Direct CSV (World Bank)](https://api.worldbank.org/v2/en/indicator/SP.POP.TOTL?downloadformat=csv)
     - **Type d'accès :** APIs REST / OData Publiques 100% Gratuites sans clé API requise.
     """)
 
@@ -38,14 +38,14 @@ def render_projet12():
     **Périmètre d'Analyse & Enjeux Métiers :**
     - Suivi de la charge épidémiologique du paludisme (cas pour 1 000 hab.) dans l'espace CEDEAO.
     - Analyse de la dynamique démographique et de l'accès aux soins de santé primaires.
-    > *💡 Pertinence : ODD 3 (Bonne Santé) | PAG 2 Bénin (Santé) | CEDEAO Plan Santé 2021–2025.*
+    > *Pertinence : ODD 3 (Bonne Santé) | PAG 2 Bénin (Santé) | CEDEAO Plan Santé 2021–2025.*
     """)
 
-    tab1, tab2, tab3 = st.tabs(["🦟 Paludisme", "👥 Démographie & Population", "📈 Indicateurs Sociaux CEDEAO"])
+    tab1, tab2, tab3 = st.tabs(["Paludisme", "Démographie & Population", "Indicateurs Sociaux CEDEAO"])
 
     # === TAB 1: PALUDISME ===
     with tab1:
-        st.subheader("🦟 Incidence du Paludisme au Bénin & en Afrique de l'Ouest (WHO GHO)")
+        st.subheader("Incidence du Paludisme au Bénin & en Afrique de l'Ouest (WHO GHO)")
         
         selected_countries = st.multiselect(
             "Sélectionner les pays à comparer",
@@ -69,7 +69,7 @@ def render_projet12():
             col_m1, col_m2 = st.columns(2)
             with col_m1:
                 st.download_button(
-                    "📥 Télécharger les données réelles Paludisme WHO (.CSV)",
+                    "Télécharger les données réelles Paludisme WHO (.CSV)",
                     data=df_malaria_all.to_csv(index=False).encode('utf-8'),
                     file_name="who_malaria_incidence_cedeao.csv",
                     mime="text/csv",
@@ -77,7 +77,7 @@ def render_projet12():
                 )
             with col_m2:
                 st.download_button(
-                    "📥 Télécharger les données (.JSON)",
+                    "Télécharger les données (.JSON)",
                     data=df_malaria_all.to_json(orient="records").encode('utf-8'),
                     file_name="who_malaria_incidence_cedeao.json",
                     mime="application/json",
@@ -104,7 +104,7 @@ def render_projet12():
 
     # === TAB 2: DEMOGRAPHIE ===
     with tab2:
-        st.subheader("👥 Population Totale & Croissance Démographique (World Bank API)")
+        st.subheader("Population Totale & Croissance Démographique (World Bank API)")
 
         with st.spinner("Interrogation World Bank API (démographie)..."):
             df_pop = fetch_world_bank_indicator("SP.POP.TOTL")
@@ -117,7 +117,7 @@ def render_projet12():
             col_pop1, col_pop2 = st.columns(2)
             with col_pop1:
                 st.download_button(
-                    "📥 Télécharger les données Démographie CEDEAO (.CSV)",
+                    "Télécharger les données Démographie CEDEAO (.CSV)",
                     data=df_pop.to_csv(index=False).encode('utf-8'),
                     file_name="world_bank_population_cedeao.csv",
                     mime="text/csv",
@@ -125,7 +125,7 @@ def render_projet12():
                 )
             with col_pop2:
                 st.download_button(
-                    "📥 Télécharger les données (.JSON)",
+                    "Télécharger les données (.JSON)",
                     data=df_pop.to_json(orient="records").encode('utf-8'),
                     file_name="world_bank_population_cedeao.json",
                     mime="application/json",
@@ -151,7 +151,7 @@ def render_projet12():
         col_f, col_l = st.columns(2)
         if not df_fert.empty:
             with col_f:
-                st.subheader("👶 Taux de Fécondité (Enfants/Femme)")
+                st.subheader("Taux de Fécondité (Enfants/Femme)")
                 fig_fert = px.line(df_fert, x='annee', y='valeur', color='pays',
                     title="Taux de Fécondité (Naissances par Femme)",
                     labels={"valeur": "Enfants / Femme", "annee": "Année"})
@@ -159,7 +159,7 @@ def render_projet12():
 
         if not df_life.empty:
             with col_l:
-                st.subheader("💚 Espérance de Vie (Années)")
+                st.subheader("Espérance de Vie (Années)")
                 fig_life = px.line(df_life, x='annee', y='valeur', color='pays',
                     title="Espérance de Vie à la Naissance (Années)",
                     labels={"valeur": "Espérance de Vie (ans)", "annee": "Année"})
@@ -167,7 +167,7 @@ def render_projet12():
 
     # === TAB 3: INDICATEURS SOCIAUX ===
     with tab3:
-        st.subheader("📈 Indicateurs Sociaux & Économiques (World Bank API — CEDEAO)")
+        st.subheader("Indicateurs Sociaux & Économiques (World Bank API — CEDEAO)")
 
         with st.spinner("Interrogation World Bank API (indicateurs sociaux)..."):
             df_poverty = fetch_world_bank_indicator("SI.POV.DDAY")
@@ -178,7 +178,7 @@ def render_projet12():
             col_soc1, col_soc2 = st.columns(2)
             with col_soc1:
                 st.download_button(
-                    "📥 Télécharger les données Pauvreté CEDEAO (.CSV)",
+                    "Télécharger les données Pauvreté CEDEAO (.CSV)",
                     data=df_poverty.to_csv(index=False).encode('utf-8'),
                     file_name="world_bank_pauvrete_cedeao.csv",
                     mime="text/csv",
@@ -186,7 +186,7 @@ def render_projet12():
                 )
             with col_soc2:
                 st.download_button(
-                    "📥 Télécharger les données (.JSON)",
+                    "Télécharger les données (.JSON)",
                     data=df_poverty.to_json(orient="records").encode('utf-8'),
                     file_name="world_bank_pauvrete_cedeao.json",
                     mime="application/json",
@@ -197,7 +197,7 @@ def render_projet12():
 
         if not df_poverty.empty:
             with col_pov:
-                st.subheader("💔 Taux de Pauvreté Extrême (<2.15$/jour)")
+                st.subheader("Taux de Pauvreté Extrême (<2.15$/jour)")
                 fig_pov = px.bar(
                     df_poverty.sort_values("annee").groupby("pays").last().reset_index(),
                     x='pays', y='valeur', color='valeur', color_continuous_scale='Reds',
@@ -207,7 +207,7 @@ def render_projet12():
 
         if not df_access_elec.empty:
             with col_elec:
-                st.subheader("💡 Accès à l'Électricité (% Population)")
+                st.subheader("Accès à l'Électricité (% Population)")
                 fig_elec = px.bar(
                     df_access_elec.sort_values("annee").groupby("pays").last().reset_index(),
                     x='pays', y='valeur', color='valeur', color_continuous_scale='Teal',
@@ -216,7 +216,7 @@ def render_projet12():
                 st.plotly_chart(fig_elec, use_container_width=True)
 
         if not df_unem.empty:
-            st.subheader("💼 Taux de Chômage (%)")
+            st.subheader("Taux de Chômage (%)")
             fig_unem = px.line(df_unem, x='annee', y='valeur', color='pays',
                 title="Évolution du Taux de Chômage (%) — CEDEAO",
                 labels={"valeur": "Taux de Chômage (%)", "annee": "Année"})

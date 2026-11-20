@@ -77,7 +77,7 @@ def train_and_evaluate():
     with open(MODEL_PATH, "wb") as f:
         pickle.dump(artifacts, f)
 
-    print(f"✅ Model saved: {MODEL_PATH}")
+    print(f"[OK] Model saved: {MODEL_PATH}")
     return artifacts
 
 if __name__ == "__main__":

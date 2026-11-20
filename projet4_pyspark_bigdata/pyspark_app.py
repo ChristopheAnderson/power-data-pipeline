@@ -11,15 +11,15 @@ import plotly.express as px
 import datetime
 
 def render_projet4():
-    st.header("🐘 Projet 4 : Mini Pipeline Big Data Distributed Processing (PySpark & Hive SQL)")
+    st.header("Projet 4 : Mini Pipeline Big Data Distributed Processing (PySpark & Hive SQL)")
     
     st.info("""
-    🔗 **Source & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
+    **Source & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
     - **Fournisseur Officiel :** UCI Machine Learning Repository (University of California, Irvine)
     - **Jeu de données :** *ElectricityLoadDiagrams20112014 Data Set (Relevés de consommation électrique haute fréquence 15-min sur 321 clients pendant 3 ans — Multi-millions de lignes)*
     - **Liens officiels directs :**
-      - 🌐 [Portail UCI ML Repository - Electricity Load Diagrams Dataset](https://archive.ics.uci.edu/dataset/321/electricityloaddiagrams20112014)
-      - 📥 [Téléchargement Direct du Dataset Brut Complet (.ZIP UCI)](https://archive.ics.uci.edu/static/public/321/electricityloaddiagrams20112014.zip)
+      - [Portail UCI ML Repository - Electricity Load Diagrams Dataset](https://archive.ics.uci.edu/dataset/321/electricityloaddiagrams20112014)
+      - [Téléchargement Direct du Dataset Brut Complet (.ZIP UCI)](https://archive.ics.uci.edu/static/public/321/electricityloaddiagrams20112014.zip)
     - **Type d'accès :** Open Data Public Recherche / Big Data Benchmark.
     """)
 
@@ -36,7 +36,7 @@ def render_projet4():
         col_dl1, col_dl2 = st.columns(2)
         with col_dl1:
             st.download_button(
-                "📥 Télécharger le jeu de données réel UCI (.CSV)",
+                "Télécharger le jeu de données réel UCI (.CSV)",
                 data=open(csv_file, "rb").read(),
                 file_name="uci_electricity_sample.csv",
                 mime="text/csv",
@@ -44,7 +44,7 @@ def render_projet4():
             )
         with col_dl2:
             st.download_button(
-                "📥 Télécharger l'échantillon (.JSON)",
+                "Télécharger l'échantillon (.JSON)",
                 data=df_raw_uci.head(500).to_json(orient="records").encode('utf-8'),
                 file_name="uci_electricity_sample.json",
                 mime="application/json",
@@ -85,7 +85,7 @@ def render_projet4():
         with col_cl:
             sel_client = st.selectbox("Sélectionner un compteur intelligent (UCI Smart Meter) :", client_cols, index=0)
         with col_agg:
-            st.info(f"📊 Dataset UCI chargé : **{len(df_raw_uci):,} relevés 15-min** sur **{len(client_cols)} compteurs**.")
+            st.info(f"Dataset UCI chargé : **{len(df_raw_uci):,} relevés 15-min** sur **{len(client_cols)} compteurs**.")
         
         # Run aggregation Hive SQL style
         df_raw_uci['timestamp'] = pd.to_datetime(df_raw_uci['timestamp'])
@@ -114,15 +114,15 @@ def render_projet4():
         )
         st.plotly_chart(fig, use_container_width=True)
 
-        with st.expander("📋 Voir le résultat de la table Hive SQL agrégée (Extrait)"):
+        with st.expander("Voir le résultat de la table Hive SQL agrégée (Extrait)"):
             st.dataframe(df_spark_agg.tail(30), use_container_width=True)
     else:
         st.warning("Fichier de données UCI introuvable.")
 
-    st.subheader("📊 Comparatif de Performance : Pandas vs PySpark")
+    st.subheader("Comparatif de Performance : Pandas vs PySpark")
     perf_data = [
-        {"Outil": "Pandas (Mono-cœur)", "Temps Execution (1M lignes)": "14.2 sec", "Utilisation RAM": "3.8 GB", "Scalabilité Limitée": "❌ Saturation RAM (> 10M lignes)"},
-        {"Outil": "PySpark (4 Workers)", "Temps Execution (1M lignes)": "2.8 sec", "Utilisation RAM": "0.6 GB par nœud", "Scalabilité Limitée": "✅ Scalabilité Horizontalement Illimitée"}
+        {"Outil": "Pandas (Mono-cœur)", "Temps Execution (1M lignes)": "14.2 sec", "Utilisation RAM": "3.8 GB", "Scalabilité Limitée": "Saturation RAM (> 10M lignes)"},
+        {"Outil": "PySpark (4 Workers)", "Temps Execution (1M lignes)": "2.8 sec", "Utilisation RAM": "0.6 GB par nœud", "Scalabilité Limitée": "Scalabilité Horizontale Illimitée"}
     ]
     st.dataframe(pd.DataFrame(perf_data), use_container_width=True)
 

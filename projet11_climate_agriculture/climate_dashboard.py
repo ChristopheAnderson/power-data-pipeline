@@ -21,16 +21,16 @@ except ImportError:
     from projet11_climate_agriculture.climate_data_engine import fetch_openmeteo_annual, fetch_all_stations_climate, STATIONS_BENIN
 
 def render_projet11():
-    st.header("🌧️ Projet 11 : Données Climatiques Réelles (Open-Meteo API) — Précipitations, Sécheresses & Inondations (Bénin / CEDEAO)")
+    st.header("Projet 11 : Données Climatiques Réelles (Open-Meteo API) — Précipitations, Sécheresses & Inondations (Bénin / CEDEAO)")
     
     st.info("""
-    🔗 **Source & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
+    **Source & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
     - **Fournisseur Officiel :** Open-Meteo (*Historical Weather Archive API*)
     - **Jeu de données :** *Relevés météorologiques journaliers réels 2010–2023 (Précipitations mm, Températures max/min °C, Vitesse du vent) pour les villes du Bénin et d'Afrique de l'Ouest*
     - **Liens officiels directs :**
-      - 🌐 [Portail Officiel Open-Meteo Weather](https://open-meteo.com/)
-      - 📖 [Documentation de l'API Open-Meteo Historical Weather](https://open-meteo.com/en/docs/historical-weather-api)
-      - 🔌 [Exemple d'Endpoint REST API Direct (JSON Cotonou)](https://archive-api.open-meteo.com/v1/archive?latitude=6.37&longitude=2.35&start_date=2020-01-01&end_date=2023-12-31&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max&timezone=auto)
+      - [Portail Officiel Open-Meteo Weather](https://open-meteo.com/)
+      - [Documentation de l'API Open-Meteo Historical Weather](https://open-meteo.com/en/docs/historical-weather-api)
+      - [Exemple d'Endpoint REST API Direct (JSON Cotonou)](https://archive-api.open-meteo.com/v1/archive?latitude=6.37&longitude=2.35&start_date=2020-01-01&end_date=2023-12-31&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max&timezone=auto)
     - **Type d'accès :** API REST Publique 100% Gratuite sans clé API requise (Données d'observation & réanalyses ERA5 / DWD).
     """)
 
@@ -38,7 +38,7 @@ def render_projet11():
     **Périmètre d'Analyse & Enjeux Métiers :**
     - Séries journalières réelles de **précipitations (mm), température (°C) et vent (km/h)** pour Cotonou, Parakou, Natitingou et les capitales CEDEAO.
     - Analyse des **saisons bimodales des pluies** au Bénin (2 saisons annuelles) et des événements extrêmes (inondations > 50 mm/jour).
-    > *💡 Pertinence : ODD 13 – Action Climatique | Agenda 2063 UA | PAG 2 Bénin (Agriculture & Alimentation).*
+    > *Pertinence : ODD 13 – Action Climatique | Agenda 2063 UA | PAG 2 Bénin (Agriculture & Alimentation).*
     """)
 
     col_ctrl, col_yr = st.columns(2)
@@ -64,7 +64,7 @@ def render_projet11():
     col_dl1, col_dl2 = st.columns(2)
     with col_dl1:
         st.download_button(
-            f"📥 Télécharger les relevés météo réels {selected_city} (.CSV)",
+            f"Télécharger les relevés météo réels {selected_city} (.CSV)",
             data=df.to_csv(index=False).encode('utf-8'),
             file_name=f"openmeteo_releves_{selected_city.lower().replace(' ', '_')}.csv",
             mime="text/csv",
@@ -72,7 +72,7 @@ def render_projet11():
         )
     with col_dl2:
         st.download_button(
-            "📥 Télécharger les relevés (.JSON)",
+            "Télécharger les relevés (.JSON)",
             data=df.to_json(orient="records", date_format="iso").encode('utf-8'),
             file_name=f"openmeteo_releves_{selected_city.lower().replace(' ', '_')}.json",
             mime="application/json",
@@ -103,7 +103,7 @@ def render_projet11():
     col1, col2 = st.columns(2)
 
     with col1:
-        st.subheader(f"📊 Précipitations Annuelles Réelles — {selected_city}")
+        st.subheader(f"Précipitations Annuelles Réelles — {selected_city}")
         fig_bar = px.bar(df_annual, x='annee', y='precip_totale_mm',
             color='precip_totale_mm', color_continuous_scale='Blues',
             title=f"Cumul Annuel de Précipitations (mm) — {selected_city}",
@@ -113,30 +113,33 @@ def render_projet11():
         st.plotly_chart(fig_bar, use_container_width=True)
 
     with col2:
-        st.subheader("📅 Cycle Saisonnier Bimodal (Mois)")
+        st.subheader("Cycle Saisonnier Bimodal (Mois)")
         fig_season = px.bar(df_monthly, x='nom_mois', y='precip_moy_mm',
             color='precip_moy_mm', color_continuous_scale='Teal',
             title=f"Profil Mensuel Moyen des Précipitations (mm) — {selected_city}",
             labels={"precip_moy_mm": "Précipitations (mm/mois)", "nom_mois": "Mois"})
         st.plotly_chart(fig_season, use_container_width=True)
 
-    st.subheader("🌡️ Évolution de la Température Maximale Annuelle (Tendance de Réchauffement)")
+    st.subheader("Évolution de la Température Maximale Annuelle (Tendance de Réchauffement)")
     fig_temp = px.line(df_annual, x='annee', y='temp_max_moy_c', markers=True,
         title=f"Tendance de la Température Maximale Annuelle — {selected_city}",
         color_discrete_sequence=['#EF4444'],
         labels={"temp_max_moy_c": "Temp. Max Moy (°C)", "annee": "Année"})
-    fig_temp.add_traces(px.scatter(df_annual, x='annee', y='temp_max_moy_c',
-        trendline='ols').data[1])
+    try:
+        fig_temp.add_traces(px.scatter(df_annual, x='annee', y='temp_max_moy_c',
+            trendline='ols').data[1])
+    except Exception:
+        pass
     st.plotly_chart(fig_temp, use_container_width=True)
 
-    st.subheader("🚨 Jours d'Événements Extrêmes (Précipitations ≥ 50 mm/jour = Risque Inondation)")
+    st.subheader("Jours d'Événements Extrêmes (Précipitations ≥ 50 mm/jour = Risque Inondation)")
     fig_ext = px.bar(df_annual, x='annee', y='jours_extremes',
         color='jours_extremes', color_continuous_scale='OrRd',
         title=f"Nombre de Jours à Risque d'Inondation (≥50mm) — {selected_city}",
         labels={"jours_extremes": "Jours Extrêmes", "annee": "Année"})
     st.plotly_chart(fig_ext, use_container_width=True)
 
-    with st.expander("📋 Voir les données journalières brutes (Open-Meteo)"):
+    with st.expander("Voir les données journalières brutes (Open-Meteo)"):
         st.dataframe(df[['date','ville','precipitation_mm','temp_max_c','temp_min_c','vent_max_kmh']].tail(30), use_container_width=True)
 
 if __name__ == "__main__":

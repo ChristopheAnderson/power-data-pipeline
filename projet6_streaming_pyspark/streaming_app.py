@@ -24,16 +24,16 @@ except ImportError:
     from projet6_streaming_pyspark.pmu_stream_simulator import generate_pmu_streaming_batch
 
 def render_projet6():
-    st.header("⚡ Projet 6 : Real-Time Streaming & Détection d'Anomalies PMU / SCADA (PySpark Structured Streaming)")
+    st.header("Projet 6 : Real-Time Streaming & Détection d'Anomalies PMU / SCADA (PySpark Structured Streaming)")
     
     st.info("""
-    🔗 **Source & Accès aux Données Utilisées (Référentiel IEEE & Télémétrie SCADA) :**
+    **Source & Accès aux Données Utilisées (Référentiel IEEE & Télémétrie SCADA) :**
     - **Fournisseurs Officiels :** IEEE Synchrophasor Standards (*IEEE C37.118*) & Centre d'Information et de Coordination WAPP / EEEOA
     - **Jeu de données :** *Flux télémétrique haute fréquence 50 Hz de Phaseur (PMU - Phasor Measurement Unit : Fréquence, Tension, Angle de phase)*
     - **Liens officiels directs :**
-      - 🌐 [Standard Officiel IEEE Synchrophasor C37.118.1](https://standards.ieee.org/ieee/37.118.1/4766/)
-      - 📚 [IEEE PES Synchrophasor Open Datasets Repository](https://cmte.ieee.org/pes-psim/)
-      - 🏛️ [Centre d'Information et de Coordination WAPP / EEEOA](https://ecowapp.org/)
+      - [Standard Officiel IEEE Synchrophasor C37.118.1](https://standards.ieee.org/ieee/37.118.1/4766/)
+      - [IEEE PES Synchrophasor Open Datasets Repository](https://cmte.ieee.org/pes-psim/)
+      - [Centre d'Information et de Coordination WAPP / EEEOA](https://ecowapp.org/)
     - **Type d'accès :** Flux Télémétrie SCADA / PMU Temps Réel calibré selon la norme IEEE & le Grid Code WAPP.
     """)
 
@@ -44,7 +44,7 @@ def render_projet6():
     - Détection instantanée des chutes de fréquence ($\text{Fréquence} < 49.5\text{ Hz}$) et des creux de tension ($\text{Tension} < 300\text{ kV}$).
     """)
 
-    st.subheader("🖥️ Panneau de Contrôle Réseau Temps Réel (WAPP Dispatching Center)")
+    st.subheader("Panneau de Contrôle Réseau Temps Réel (WAPP Dispatching Center)")
 
     df_pmu = generate_pmu_streaming_batch(150)
     df_pmu['timestamp_dt'] = pd.to_datetime(df_pmu['timestamp'])
@@ -53,7 +53,7 @@ def render_projet6():
     col_dl1, col_dl2 = st.columns(2)
     with col_dl1:
         st.download_button(
-            "📥 Télécharger le lot streaming PMU (.CSV)",
+            "Télécharger le lot streaming PMU (.CSV)",
             data=df_pmu.to_csv(index=False).encode('utf-8'),
             file_name="wapp_pmu_streaming_batch.csv",
             mime="text/csv",
@@ -61,7 +61,7 @@ def render_projet6():
         )
     with col_dl2:
         st.download_button(
-            "📥 Télécharger le flux (.JSON)",
+            "Télécharger le flux (.JSON)",
             data=df_pmu.to_json(orient="records", date_format="iso").encode('utf-8'),
             file_name="wapp_pmu_streaming_batch.json",
             mime="application/json",
@@ -78,10 +78,10 @@ def render_projet6():
     m4.metric("Alertes Critiques Détectées", f"{len(critical_df)}", delta_color="inverse")
 
     if len(critical_df) > 0:
-        st.error(f"🚨 ALERTE CIC WAPP : {len(critical_df)} anomalies de stabilité réseau détectées sur le flux streaming !")
+        st.error(f"ALERTE CIC WAPP : {len(critical_df)} anomalies de stabilité réseau détectées sur le flux streaming.")
 
     # Frequency Stream Plot
-    st.subheader("📉 Flux Temps Réel de la Fréquence Réseau (Hz) par Substation")
+    st.subheader("Flux Temps Réel de la Fréquence Réseau (Hz) par Substation")
     fig_freq = px.line(
         df_pmu,
         x='timestamp_dt',
@@ -95,7 +95,7 @@ def render_projet6():
     st.plotly_chart(fig_freq, use_container_width=True)
 
     # Voltage Stream Plot
-    st.subheader("⚡ Flux Temps Réel de la Tension (kV) & Angle de Phase (°)")
+    st.subheader("Flux Temps Réel de la Tension (kV) & Angle de Phase (°)")
     col_v, col_p = st.columns(2)
 
     with col_v:
@@ -119,7 +119,7 @@ def render_projet6():
         )
         st.plotly_chart(fig_phase, use_container_width=True)
 
-    st.subheader("📋 Tampon de Streaming PySpark (Derniers 15 Relevés PMU Ingestés)")
+    st.subheader("Tampon de Streaming PySpark (Derniers 15 Relevés PMU Ingestés)")
     st.dataframe(df_pmu[['timestamp', 'substation', 'frequence_hz', 'tension_kv', 'angle_phase_deg', 'status']].head(15), use_container_width=True)
 
 if __name__ == "__main__":

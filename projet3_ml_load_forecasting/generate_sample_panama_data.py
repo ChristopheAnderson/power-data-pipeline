@@ -40,7 +40,7 @@ def generate_panama_dataset():
     })
 
     df.to_csv(CSV_PATH, index=False)
-    print(f"✅ Dataset generated: {CSV_PATH} ({len(df)} rows)")
+    print(f"[OK] Dataset generated: {CSV_PATH} ({len(df)} rows)")
     return df
 
 if __name__ == "__main__":

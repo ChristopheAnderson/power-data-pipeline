@@ -92,15 +92,15 @@ def get_world_bank_ecowas_data():
     return pd.DataFrame(fallback_data)
 
 def render_projet2():
-    st.header("🛡️ Projet 2 : Contrôle Qualité, Gouvernance & Analytics Données Afrique (WAPP)")
+    st.header("Projet 2 : Contrôle Qualité, Gouvernance & Analytics Données Afrique (WAPP)")
     
     st.info("""
-    🔗 **Sources & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
+    **Sources & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
     - **Fournisseurs Officiels :** WAPP / EEEOA (*West African Power Pool*) & Banque Mondiale (*World Bank Open Data*)
     - **Jeux de données & Liens directs :**
-      - 🌍 *Indicateurs énergétiques CEDEAO — Accès à l'électricité (% pop.)* : [Portail World Bank (EG.ELC.ACCS.ZS)](https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS) | [📥 Téléchargement Direct CSV (Banque Mondiale)](https://api.worldbank.org/v2/en/indicator/EG.ELC.ACCS.ZS?downloadformat=csv)
-      - 📉 *Pertes de transport et distribution (% production)* : [Portail World Bank (EG.ELC.LOSS.ZS)](https://data.worldbank.org/indicator/EG.ELC.LOSS.ZS) | [📥 Téléchargement Direct CSV](https://api.worldbank.org/v2/en/indicator/EG.ELC.LOSS.ZS?downloadformat=csv)
-      - ⚡ *Référentiel technique de télémesures des GRT membres WAPP (Tension 161 kV, Fréquence 50 Hz, Puissance MW)* : [Système d'Information WAPP / EEEOA](https://ecowapp.org/)
+      - *Indicateurs énergétiques CEDEAO — Accès à l'électricité (% pop.)* : [Portail World Bank (EG.ELC.ACCS.ZS)](https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS) | [Téléchargement Direct CSV (Banque Mondiale)](https://api.worldbank.org/v2/en/indicator/EG.ELC.ACCS.ZS?downloadformat=csv)
+      - *Pertes de transport et distribution (% production)* : [Portail World Bank (EG.ELC.LOSS.ZS)](https://data.worldbank.org/indicator/EG.ELC.LOSS.ZS) | [Téléchargement Direct CSV](https://api.worldbank.org/v2/en/indicator/EG.ELC.LOSS.ZS?downloadformat=csv)
+      - *Référentiel technique de télémesures des GRT membres WAPP (Tension 161 kV, Fréquence 50 Hz, Puissance MW)* : [Système d'Information WAPP / EEEOA](https://ecowapp.org/)
     - **Type d'accès :** API REST Publique Banque Mondiale & Référentiel technique de télémesure WAPP.
     """)
 
@@ -111,7 +111,7 @@ def render_projet2():
     - Intégration des Open Data Banque Mondiale / CEDEAO (*Access to Electricity & Network Losses*).
     """)
 
-    tab1, tab2 = st.tabs(["📊 Audit Qualité Télémesure GRT", "🌍 Indicateurs Énergétiques Banque Mondiale (CEDEAO)"])
+    tab1, tab2 = st.tabs(["Audit Qualité Télémesure GRT", "Indicateurs Énergétiques Banque Mondiale (CEDEAO)"])
 
     with tab1:
         st.subheader("1. Audit de Complétude et Détection d'Anomalies des GRT")
@@ -142,7 +142,7 @@ def render_projet2():
         col_t1, col_t2 = st.columns(2)
         with col_t1:
             st.download_button(
-                "📥 Télécharger l'Audit Qualité GRT (.CSV)",
+                "Télécharger l'Audit Qualité GRT (.CSV)",
                 data=audit_df.to_csv(index=False).encode('utf-8'),
                 file_name="wapp_audit_qualite_grt.csv",
                 mime="text/csv",
@@ -150,7 +150,7 @@ def render_projet2():
             )
         with col_t2:
             st.download_button(
-                "📥 Télécharger les Télémesures (.JSON)",
+                "Télécharger les Télémesures (.JSON)",
                 data=df_filtered.to_json(orient="records", date_format="iso").encode('utf-8'),
                 file_name="wapp_telemesures_grt.json",
                 mime="application/json",
@@ -171,13 +171,13 @@ def render_projet2():
         st.plotly_chart(fig_scatter, use_container_width=True)
 
     with tab2:
-        st.subheader("🌍 Indicateurs d'Accès à l'Électricité & Pertes Réseau (Banque Mondiale)")
+        st.subheader("Indicateurs d'Accès à l'Électricité & Pertes Réseau (Banque Mondiale)")
         df_wb = get_world_bank_ecowas_data()
 
         col_wb1, col_wb2 = st.columns(2)
         with col_wb1:
             st.download_button(
-                "📥 Télécharger les Données Banque Mondiale CEDEAO (.CSV)",
+                "Télécharger les Données Banque Mondiale CEDEAO (.CSV)",
                 data=df_wb.to_csv(index=False).encode('utf-8'),
                 file_name="world_bank_energie_cedeao.csv",
                 mime="text/csv",
@@ -185,7 +185,7 @@ def render_projet2():
             )
         with col_wb2:
             st.download_button(
-                "📥 Télécharger les Données (.JSON)",
+                "Télécharger les Données (.JSON)",
                 data=df_wb.to_json(orient="records").encode('utf-8'),
                 file_name="world_bank_energie_cedeao.json",
                 mime="application/json",

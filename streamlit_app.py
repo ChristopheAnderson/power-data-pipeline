@@ -23,7 +23,7 @@ from projet13_economy_development.economy_development_dashboard import render_pr
 
 st.set_page_config(
     page_title="Power Grid & Multi-Sector Data Engineering Platform",
-    page_icon="⚡", layout="wide", initial_sidebar_state="expanded"
+    layout="wide", initial_sidebar_state="expanded"
 )
 
 # --- CSS DE GESTION DE LA BARRE LATÉRALE REPLIABLE ---
@@ -116,18 +116,18 @@ st.sidebar.markdown(
     unsafe_allow_html=True
 )
 
-st.sidebar.title("⚡ PowerGrid & Data Suite")
+st.sidebar.title("PowerGrid & Data Suite")
 st.sidebar.markdown("**Christophe WAVOEKE**  \nIngénieur Modélisation & Data Systems")
 st.sidebar.markdown("---")
-st.sidebar.caption("🔵 Énergie & Réseaux Électriques")
-st.sidebar.caption("🟢 Big Data & Multi-Secteurs")
-st.sidebar.caption("🟡 Données & Indicateurs Régionaux")
-st.sidebar.info("💡 **Affichage large :** Cliquez sur **« Masquer** en haut à droite pour replier ce menu et afficher les graphiques en pleine largeur.")
+st.sidebar.caption("Énergie & Réseaux Électriques")
+st.sidebar.caption("Big Data & Multi-Secteurs")
+st.sidebar.caption("Données & Indicateurs Régionaux")
+st.sidebar.info("**Affichage large :** Cliquez sur **Masquer** en haut à droite pour replier ce menu et afficher les graphiques en pleine largeur.")
 
 import streamlit.components.v1 as components
 
 def render_cv():
-    st.markdown("## 📄 Curriculum Vitæ Exécutif — Christophe WAVOEKE")
+    st.markdown("## Curriculum Vitæ Exécutif — Christophe WAVOEKE")
     st.markdown("**Ingénieur Modélisation Mathématique & Informatique | Data Systems & Big Data**")
     
     cv_dir = os.path.join(os.path.dirname(__file__), "assets")
@@ -139,7 +139,7 @@ def render_cv():
         if os.path.exists(cv_pdf_path):
             with open(cv_pdf_path, "rb") as f:
                 st.download_button(
-                    label="📥 Télécharger le CV (PDF Officiel 2 Pages)",
+                    label="Télécharger le CV (PDF Officiel 2 Pages)",
                     data=f.read(),
                     file_name="CV_Christophe_WAVOEKE_Data_Analyst_BI.pdf",
                     mime="application/pdf",
@@ -150,14 +150,14 @@ def render_cv():
             with open(cv_html_path, "r", encoding="utf-8") as f:
                 html_data = f.read()
             st.download_button(
-                label="🌐 Télécharger la Version HTML Standalone",
+                label="Télécharger la Version HTML Standalone",
                 data=html_data,
                 file_name="CV_Christophe_WAVOEKE_Data_Analyst_BI.html",
                 mime="text/html",
                 use_container_width=True
             )
     with col3:
-        st.info("💡 **Aperçu haute fidélité :** Le CV interactif complet est navigable ci-dessous avec tous les liens vers les démonstrateurs et dépôts GitHub.")
+        st.info("**Aperçu haute fidélité :** Le CV interactif complet est navigable ci-dessous avec tous les liens vers les démonstrateurs et dépôts GitHub.")
 
     if os.path.exists(cv_html_path):
         with open(cv_html_path, "r", encoding="utf-8") as f:
@@ -167,24 +167,24 @@ def render_cv():
         st.error("Le fichier du CV HTML est introuvable dans le dossier assets.")
 
 PAGES = {
-    "🏠 Vue d'ensemble de la Plateforme": None,
-    "📄 Curriculum Vitæ (CV Exécutif)": render_cv,
+    "Vue d'ensemble de la Plateforme": None,
+    "Curriculum Vitæ (CV Exécutif)": render_cv,
     # --- ÉNERGIE ---
-    "⚡ P1 : Pipeline API RTE (Temps Réel)": render_projet1,
-    "🛡️ P2 : Qualité & Gouvernance Données Énergie": render_projet2,
-    "📈 P3 : Prévision ML (Load Forecasting)": render_projet3,
-    "🐘 P4 : Big Data PySpark & Hive SQL": render_projet4,
-    "🌍 P5 : Satellite Géospatiale (NASA POWER)": render_projet5,
-    "📡 P6 : Streaming Temps Réel PMU/SCADA": render_projet6,
-    "📊 P7 : Marché Nodal & Dispatch Économique": render_projet7,
+    "P1 : Pipeline API RTE (Temps Réel)": render_projet1,
+    "P2 : Qualité & Gouvernance Données Énergie": render_projet2,
+    "P3 : Prévision ML (Load Forecasting)": render_projet3,
+    "P4 : Big Data PySpark & Hive SQL": render_projet4,
+    "P5 : Satellite Géospatiale (NASA POWER)": render_projet5,
+    "P6 : Streaming Temps Réel PMU/SCADA": render_projet6,
+    "P7 : Marché Nodal & Dispatch Économique": render_projet7,
     # --- MULTI-SECTEURS ---
-    "🔬 P8 : IoT & Capteurs Électroniques (FFT)": render_projet8,
-    "💳 P9 : FinTech & Credit Risk Scoring": render_projet9,
-    "🚚 P10 : Smart Logistics & Supply Chain": render_projet10,
+    "P8 : IoT & Capteurs Électroniques (FFT)": render_projet8,
+    "P9 : FinTech & Credit Risk Scoring": render_projet9,
+    "P10 : Smart Logistics & Supply Chain": render_projet10,
     # --- AFRIQUE RÉELLE (APIS) ---
-    "🌧️ P11 : Climat & Précipitations (Open-Meteo API)": render_projet11,
-    "🏥 P12 : Santé & Démographie (WHO GHO + World Bank)": render_projet12,
-    "📊 P13 : Économie & Développement (World Bank API)": render_projet13,
+    "P11 : Climat & Précipitations (Open-Meteo API)": render_projet11,
+    "P12 : Santé & Démographie (WHO GHO + World Bank)": render_projet12,
+    "P13 : Économie & Développement (World Bank API)": render_projet13,
 }
 
 default_index = 0
@@ -200,10 +200,10 @@ except Exception:
 
 menu = st.sidebar.radio("Navigation :", list(PAGES.keys()), index=default_index)
 st.sidebar.markdown("---")
-st.sidebar.info("✉️ christophewavoeke18@gmail.com  \n📞 +229 01 66 81 83 76  \n🌐 [Portfolio Web](https://christopher-portofolio.vercel.app/)  \n📊 [Démonstrateurs Data Analytics & BI](https://data-analytics-bi-portfolio-ek57rbdepycxrx94gjvdv8.streamlit.app/)  \n🐱 [GitHub Repository](https://github.com/ChristopheAnderson/power-data-pipeline)")
+st.sidebar.info("**Email :** christophewavoeke18@gmail.com  \n**Tél. :** +229 01 66 81 83 76  \n[Portfolio Web](https://christopher-portofolio.vercel.app/)  \n[Démonstrateurs Data Analytics & BI](https://data-analytics-bi-portfolio-ek57rbdepycxrx94gjvdv8.streamlit.app/)  \n[GitHub Repository](https://github.com/ChristopheAnderson/power-data-pipeline)")
 
-if menu == "🏠 Vue d'ensemble de la Plateforme":
-    st.title("⚡ Power Grid & Multi-Sector Data Engineering Platform")
+if menu == "Vue d'ensemble de la Plateforme":
+    st.title("Power Grid & Multi-Sector Data Engineering Platform")
     st.subheader("Architecture de Traitement, Big Data, Streaming SCADA & Optimisation Énergétique")
 
     st.markdown("""
@@ -212,28 +212,28 @@ if menu == "🏠 Vue d'ensemble de la Plateforme":
     la **FinTech**, la **Logistique** et les **indicateurs socio-économiques régionaux**.
     """)
 
-    st.info("📄 **Curriculum Vitæ Exécutif :** Consultez l'onglet **« 📄 Curriculum Vitæ (CV Exécutif) »** dans le menu latéral pour visualiser le profil complet en format interactif ou télécharger le PDF officiel 2 pages.")
+    st.info("**Curriculum Vitæ Exécutif :** Consultez l'onglet **Curriculum Vitæ (CV Exécutif)** dans le menu latéral pour visualiser le profil complet en format interactif ou télécharger le PDF officiel 2 pages.")
 
 
     categories = {
-        "⚡ ÉNERGIE & RÉSEAU (P1–P7)": [
-            "**P1** · API RTE éCO2mix Temps Réel — 🔗 [Données Open Data Réseaux Énergies (ODRE)](https://opendata.reseaux-energies.fr/explore/dataset/eco2mix-national-tr/information/) | 📥 *Téléchargeable en direct (.CSV / .JSON) sur la sous-page*",
-            "**P2** · Gouvernance & Qualité des Données GRT WAPP — 🔗 [Portail WAPP](https://ecowapp.org/) & [Banque Mondiale Énergie](https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
-            "**P3** · ML Load Forecasting (Panama 40k relevés) — 🔗 [Dataset Kaggle CND Panama](https://www.kaggle.com/datasets/albertovg/electric-load-forecasting-panama) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
-            "**P4** · Big Data PySpark 3.5 & Hive SQL (321 compteurs × 3 ans) — 🔗 [UCI ML Repository Dataset](https://archive.ics.uci.edu/dataset/321/electricityloaddiagrams20112014) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
-            "**P5** · Ingestion Satellite NASA POWER & Géostatistique BME — 🔗 [Portail & API NASA POWER](https://power.larc.nasa.gov/) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
-            "**P6** · Streaming SCADA/PMU 50 Hz (PySpark Structured Streaming) — 🔗 [Standard IEEE C37.118](https://standards.ieee.org/ieee/37.118.1/4766/) & [WAPP CIC](https://ecowapp.org/) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
-            "**P7** · Economic Dispatch & Prix Marginaux Nodiaux LMP ($/MWh) — 🔗 [ARREC / ERERA](https://erera.arrec.org/) & [Marché WAPP](https://ecowapp.org/) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
+        "ÉNERGIE & RÉSEAU (P1–P7)": [
+            "**P1** · API RTE éCO2mix Temps Réel — [Données Open Data Réseaux Énergies (ODRE)](https://opendata.reseaux-energies.fr/explore/dataset/eco2mix-national-tr/information/) | *Téléchargeable en direct (.CSV / .JSON) sur la sous-page*",
+            "**P2** · Gouvernance & Qualité des Données GRT WAPP — [Portail WAPP](https://ecowapp.org/) & [Banque Mondiale Énergie](https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS) | *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P3** · ML Load Forecasting (Panama 40k relevés) — [Dataset Kaggle CND Panama](https://www.kaggle.com/datasets/albertovg/electric-load-forecasting-panama) | *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P4** · Big Data PySpark 3.5 & Hive SQL (321 compteurs × 3 ans) — [UCI ML Repository Dataset](https://archive.ics.uci.edu/dataset/321/electricityloaddiagrams20112014) | *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P5** · Ingestion Satellite NASA POWER & Géostatistique BME — [Portail & API NASA POWER](https://power.larc.nasa.gov/) | *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P6** · Streaming SCADA/PMU 50 Hz (PySpark Structured Streaming) — [Standard IEEE C37.118](https://standards.ieee.org/ieee/37.118.1/4766/) & [WAPP CIC](https://ecowapp.org/) | *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P7** · Economic Dispatch & Prix Marginaux Nodiaux LMP ($/MWh) — [ARREC / ERERA](https://erera.arrec.org/) & [Marché WAPP](https://ecowapp.org/) | *Téléchargeable en direct (.CSV / .JSON)*",
         ],
-        "🌐 MULTI-SECTEURS (P8–P10)": [
-            "**P8** · Industrial IoT : Traitement de Signal FFT & RUL — 🔗 [NASA PCoE Prognostics Data](https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
-            "**P9** · FinTech : Credit Risk Scoring & Détection de Défaut — 🔗 [UCI German Credit Data](https://archive.ics.uci.edu/dataset/144/statlog+german+credit+data) & [Kaggle Give Me Some Credit](https://www.kaggle.com/c/GiveMeSomeCredit/data) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
-            "**P10** · Smart Logistics : Traces GPS & Optimisation CO2 — 🔗 [OpenStreetMap](https://www.openstreetmap.org/) & [Microsoft Research GeoLife](https://www.microsoft.com/en-us/research/publication/geolife-gps-trajectory-dataset-user-guide/) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
+        "MULTI-SECTEURS (P8–P10)": [
+            "**P8** · Industrial IoT : Traitement de Signal FFT & RUL — [NASA PCoE Prognostics Data](https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/) | *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P9** · FinTech : Credit Risk Scoring & Détection de Défaut — [UCI German Credit Data](https://archive.ics.uci.edu/dataset/144/statlog+german+credit+data) & [Kaggle Give Me Some Credit](https://www.kaggle.com/c/GiveMeSomeCredit/data) | *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P10** · Smart Logistics : Traces GPS & Optimisation CO2 — [OpenStreetMap](https://www.openstreetmap.org/) & [Microsoft Research GeoLife](https://www.microsoft.com/en-us/research/publication/geolife-gps-trajectory-dataset-user-guide/) | *Téléchargeable en direct (.CSV / .JSON)*",
         ],
-        "🌍 AFRIQUE RÉELLE — APIs Gratuites (P11–P13)": [
-            "**P11** · Climat Réel (Précipitations Bénin / CEDEAO) — 🔗 [API Open-Meteo Historical Weather](https://open-meteo.com/en/docs/historical-weather-api) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
-            "**P12** · Paludisme, Santé & Démographie — 🔗 [API WHO GHO](https://www.who.int/data/gho) & [API World Bank](https://data.worldbank.org/) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
-            "**P13** · Macro-Économie & Développement Durable — 🔗 [API World Bank Open Data](https://data.worldbank.org/) | 📥 *Téléchargeable en direct (.CSV / .JSON)*",
+        "AFRIQUE RÉELLE — APIs Gratuites (P11–P13)": [
+            "**P11** · Climat Réel (Précipitations Bénin / CEDEAO) — [API Open-Meteo Historical Weather](https://open-meteo.com/en/docs/historical-weather-api) | *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P12** · Paludisme, Santé & Démographie — [API WHO GHO](https://www.who.int/data/gho) & [API World Bank](https://data.worldbank.org/) | *Téléchargeable en direct (.CSV / .JSON)*",
+            "**P13** · Macro-Économie & Développement Durable — [API World Bank Open Data](https://data.worldbank.org/) | *Téléchargeable en direct (.CSV / .JSON)*",
         ]
     }
 
@@ -242,7 +242,15 @@ if menu == "🏠 Vue d'ensemble de la Plateforme":
             for item in items:
                 st.markdown(f"- {item}")
 
-    st.success("👈 Naviguez dans le menu latéral : chaque sous-page contient des boutons de téléchargement direct (.CSV / .JSON) et des liens vers les portails officiels !")
+    st.divider()
+    st.subheader("Aperçu Direct des Démonstrateurs")
+    preview_project = st.selectbox(
+        "Sélectionnez un module pour l'explorer directement sur cette page :",
+        [k for k in PAGES.keys() if k not in ["Vue d'ensemble de la Plateforme", "Curriculum Vitæ (CV Exécutif)"]],
+        index=0
+    )
+    if preview_project and PAGES.get(preview_project):
+        PAGES[preview_project]()
 else:
     fn = PAGES[menu]
     if fn:

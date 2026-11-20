@@ -5,7 +5,6 @@ Fast Fourier Transform (FFT), Analyse Spectrale & Durée de Vie Utile Restante (
 """
 import numpy as np
 import pandas as pd
-from scipy.fft import fft, fftfreq
 
 def generate_sensor_vibration_signal(sampling_rate=1000, duration_sec=2.0, anomaly_level=0.0):
     """
@@ -35,8 +34,8 @@ def compute_fft_spectrum(time_array, signal_array, sampling_rate=1000):
     Calcule la Transformée de Fourier Rapide (FFT) pour obtenir le spectre d'amplitude.
     """
     N = len(signal_array)
-    yf = fft(signal_array)
-    xf = fftfreq(N, 1.0 / sampling_rate)[:N // 2]
+    yf = np.fft.fft(signal_array)
+    xf = np.fft.fftfreq(N, 1.0 / sampling_rate)[:N // 2]
     amplitude = 2.0 / N * np.abs(yf[0:N // 2])
 
     df_spectrum = pd.DataFrame({

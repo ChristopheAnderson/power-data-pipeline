@@ -11,6 +11,13 @@ def load_german_credit_dataset():
     """
     if os.path.exists(CSV_GERMAN):
         df = pd.read_csv(CSV_GERMAN)
+        if "decision_credit" in df.columns:
+            df["decision_credit"] = (
+                df["decision_credit"]
+                .astype(str)
+                .str.replace(r"^[^\wÉÈÊÀÂÙÛÎÔÇ]+", "", regex=True)
+                .str.strip()
+            )
         return df
     else:
         return generate_financial_credit_dataset(500)
@@ -41,7 +48,7 @@ def generate_financial_credit_dataset(n_samples=500):
         "retards_paiement_mois": historique_retards_mois,
         "probabilite_defaut_pct": np.round(prob_defaut * 100.0, 1),
         "statut_defaut": statut_defaut,
-        "decision_credit": np.where(prob_defaut < 0.25, "✅ ACCORDÉ", np.where(prob_defaut < 0.40, "⚠️ ÉTUDE MANUELLE", "❌ REFUSÉ"))
+        "decision_credit": np.where(prob_defaut < 0.25, "ACCORDÉ", np.where(prob_defaut < 0.40, "ÉTUDE MANUELLE", "REFUSÉ"))
     })
 
     return df

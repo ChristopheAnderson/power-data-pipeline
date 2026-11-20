@@ -58,7 +58,7 @@ class WAPPDataQualityEngine:
                 "Anomalies Détectées": anomalies_cnt,
                 "Déviations Tension (kV)": dev_v_cnt,
                 "Déviations Fréquence (Hz)": dev_f_cnt,
-                "Statut Conformité": "✅ Conforme" if (completeness_pct >= 95.0 and anomalies_cnt == 0) else "⚠️ Non Conforme"
+                "Statut Conformité": "Conforme" if (completeness_pct >= 95.0 and anomalies_cnt == 0) else "Non Conforme"
             }
 
         return pd.DataFrame(results).T

@@ -71,30 +71,30 @@ def fetch_wb(indicator_code, countries=CEDEAO_ISO, mrv=25):
     return pd.DataFrame(records).sort_values(["pays", "annee"])
 
 def render_projet13():
-    st.header("📊 Projet 13 : Macro-Économie & Développement Durable (World Bank API Réelle — CEDEAO / Bénin)")
+    st.header("Projet 13 : Macro-Économie & Développement Durable (World Bank API Réelle — CEDEAO / Bénin)")
     
     st.info("""
-    🔗 **Source & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
+    **Source & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
     - **Fournisseur Officiel :** Banque Mondiale (*World Bank Open Data API*)
     - **Jeu de données :** *Indicateurs macroéconomiques et développement durable (PIB, PIB/hab, Inflation, Chômage, Pauvreté, Électricité, Internet, Alphabétisation) pour les pays de la CEDEAO*
     - **Liens officiels directs :**
-      - 🌐 [Catalogue Officiel World Bank Open Data](https://data.worldbank.org/)
-      - 📊 [World Bank DataBank (Rapports & Téléchargements Multi-Pays)](https://databank.worldbank.org/reports.aspx?source=world-development-indicators)
-      - 🔌 [Endpoint API REST Direct (JSON PIB CEDEAO)](http://api.worldbank.org/v2/country/BEN;GHA;CIV;NGA;NER;BFA;TGO;SEN;MLI;GIN/indicator/NY.GDP.MKTP.CD?format=json&mrv=25&per_page=500)
+      - [Catalogue Officiel World Bank Open Data](https://data.worldbank.org/)
+      - [World Bank DataBank (Rapports & Téléchargements Multi-Pays)](https://databank.worldbank.org/reports.aspx?source=world-development-indicators)
+      - [Endpoint API REST Direct (JSON PIB CEDEAO)](http://api.worldbank.org/v2/country/BEN;GHA;CIV;NGA;NER;BFA;TGO;SEN;MLI;GIN/indicator/NY.GDP.MKTP.CD?format=json&mrv=25&per_page=500)
     - **Type d'accès :** API REST Publique Mondiale (100% Gratuite, sans clé d'authentification).
     """)
 
     st.markdown("""
     **Périmètre d'Analyse & Enjeux Métiers :**
     - Tableau de bord multi-indicateurs comparatif entre les **12 pays de la CEDEAO**.
-    > *💡 Enjeux : ODD 1 (Pauvreté), ODD 8 (Travail Décent), ODD 10 (Inégalités) | Agenda 2063 UA | PAG 2 Bénin.*
+    > *Enjeux : ODD 1 (Pauvreté), ODD 8 (Travail Décent), ODD 10 (Inégalités) | Agenda 2063 UA | PAG 2 Bénin.*
     """)
 
-    tab1, tab2, tab3 = st.tabs(["💰 PIB & Économie", "💼 Emploi & Pauvreté", "🌐 Indicateurs de Société"])
+    tab1, tab2, tab3 = st.tabs(["PIB & Économie", "Emploi & Pauvreté", "Indicateurs de Société"])
 
     # === TAB 1: PIB ===
     with tab1:
-        st.subheader("💰 Produit Intérieur Brut — Bénin & CEDEAO")
+        st.subheader("Produit Intérieur Brut — Bénin & CEDEAO")
         with st.spinner("Chargement données PIB (World Bank)..."):
             df_gdp = fetch_wb("NY.GDP.MKTP.CD")
             df_gdppc = fetch_wb("NY.GDP.PCAP.CD")
@@ -103,7 +103,7 @@ def render_projet13():
             col_gdp1, col_gdp2 = st.columns(2)
             with col_gdp1:
                 st.download_button(
-                    "📥 Télécharger les séries PIB CEDEAO (.CSV)",
+                    "Télécharger les séries PIB CEDEAO (.CSV)",
                     data=df_gdp.to_csv(index=False).encode('utf-8'),
                     file_name="world_bank_pib_cedeao.csv",
                     mime="text/csv",
@@ -111,7 +111,7 @@ def render_projet13():
                 )
             with col_gdp2:
                 st.download_button(
-                    "📥 Télécharger les données (.JSON)",
+                    "Télécharger les données (.JSON)",
                     data=df_gdp.to_json(orient="records").encode('utf-8'),
                     file_name="world_bank_pib_cedeao.json",
                     mime="application/json",
@@ -144,7 +144,7 @@ def render_projet13():
 
     # === TAB 2: EMPLOI & PAUVRETÉ ===
     with tab2:
-        st.subheader("💼 Chômage, Pauvreté Extrême & Inflation")
+        st.subheader("Chômage, Pauvreté Extrême & Inflation")
         with st.spinner("Chargement données emploi & pauvreté (World Bank)..."):
             df_unem = fetch_wb("SL.UEM.TOTL.ZS")
             df_pov = fetch_wb("SI.POV.DDAY")
@@ -154,7 +154,7 @@ def render_projet13():
             col_emp1, col_emp2 = st.columns(2)
             with col_emp1:
                 st.download_button(
-                    "📥 Télécharger les séries Emploi & Chômage (.CSV)",
+                    "Télécharger les séries Emploi & Chômage (.CSV)",
                     data=df_unem.to_csv(index=False).encode('utf-8'),
                     file_name="world_bank_chomage_cedeao.csv",
                     mime="text/csv",
@@ -162,7 +162,7 @@ def render_projet13():
                 )
             with col_emp2:
                 st.download_button(
-                    "📥 Télécharger les données (.JSON)",
+                    "Télécharger les données (.JSON)",
                     data=df_unem.to_json(orient="records").encode('utf-8'),
                     file_name="world_bank_chomage_cedeao.json",
                     mime="application/json",
@@ -198,7 +198,7 @@ def render_projet13():
 
     # === TAB 3: SOCIÉTÉ ===
     with tab3:
-        st.subheader("🌐 Électricité, Internet & Alphabétisation — CEDEAO")
+        st.subheader("Électricité, Internet & Alphabétisation — CEDEAO")
         with st.spinner("Chargement indicateurs de société (World Bank)..."):
             df_elec = fetch_wb("EG.ELC.ACCS.ZS")
             df_net = fetch_wb("IT.NET.USER.ZS")
@@ -208,7 +208,7 @@ def render_projet13():
             col_soc1, col_soc2 = st.columns(2)
             with col_soc1:
                 st.download_button(
-                    "📥 Télécharger les séries Accès Électricité CEDEAO (.CSV)",
+                    "Télécharger les séries Accès Électricité CEDEAO (.CSV)",
                     data=df_elec.to_csv(index=False).encode('utf-8'),
                     file_name="world_bank_acces_electricite_cedeao.csv",
                     mime="text/csv",
@@ -216,7 +216,7 @@ def render_projet13():
                 )
             with col_soc2:
                 st.download_button(
-                    "📥 Télécharger les données (.JSON)",
+                    "Télécharger les données (.JSON)",
                     data=df_elec.to_json(orient="records").encode('utf-8'),
                     file_name="world_bank_acces_electricite_cedeao.json",
                     mime="application/json",

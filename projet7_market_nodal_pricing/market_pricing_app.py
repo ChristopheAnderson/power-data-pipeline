@@ -23,16 +23,16 @@ except ImportError:
     from projet7_market_nodal_pricing.opf_dispatch_optimizer import WAPPMarketDispatchOptimizer
 
 def render_projet7():
-    st.header("📊 Projet 7 : Analytics du Marché Régional de l'Électricité (LMP & Economic Dispatch WAPP)")
+    st.header("Projet 7 : Analytics du Marché Régional de l'Électricité (LMP & Economic Dispatch WAPP)")
     
     st.info("""
-    🔗 **Sources & Accès aux Données Utilisées (Référentiel Marché Régional CEDEAO) :**
+    **Sources & Accès aux Données Utilisées (Référentiel Marché Régional CEDEAO) :**
     - **Fournisseurs Officiels :** ARREC / ERERA (*Autorité de Régulation Régionale du Secteur de l'Électricité de la CEDEAO*), WAPP / EEEOA & IEEE PES
     - **Jeu de données :** *Paramètres d'Economic Dispatch, Coûts marginaux de génération ($/MWh) et capacités de transit interfrontalier WAPP*
     - **Liens officiels directs :**
-      - 🌐 [Portail Officiel de l'ARREC / ERERA](https://erera.arrec.org/)
-      - ⚡ [Portail du Marché Régional WAPP / EEEOA](https://ecowapp.org/)
-      - 📚 [IEEE Power Systems Test Case Archive (Benchmark OPF & Dispatch)](https://labs.ece.uw.edu/pstca/)
+      - [Portail Officiel de l'ARREC / ERERA](https://erera.arrec.org/)
+      - [Portail du Marché Régional WAPP / EEEOA](https://ecowapp.org/)
+      - [IEEE Power Systems Test Case Archive (Benchmark OPF & Dispatch)](https://labs.ece.uw.edu/pstca/)
     - **Type d'accès :** Données Réglementaires et Modèles de Marché Électrique Régional CEDEAO.
     """)
 
@@ -43,7 +43,7 @@ def render_projet7():
     - Optimisation sous contraintes de capacité de génération et de transit interfrontalier.
     """)
 
-    st.subheader("🎛️ Simulation du Marché Électrique Régional (WAPP Market Dispatch)")
+    st.subheader("Simulation du Marché Électrique Régional (WAPP Market Dispatch)")
 
     col_req, col_cong = st.columns(2)
     with col_req:
@@ -58,7 +58,7 @@ def render_projet7():
     col_dl1, col_dl2 = st.columns(2)
     with col_dl1:
         st.download_button(
-            "📥 Télécharger la table d'Economic Dispatch (.CSV)",
+            "Télécharger la table d'Economic Dispatch (.CSV)",
             data=df_market.to_csv(index=False).encode('utf-8'),
             file_name="wapp_market_economic_dispatch.csv",
             mime="text/csv",
@@ -66,7 +66,7 @@ def render_projet7():
         )
     with col_dl2:
         st.download_button(
-            "📥 Télécharger les données de Marché (.JSON)",
+            "Télécharger les données de Marché (.JSON)",
             data=df_market.to_json(orient="records").encode('utf-8'),
             file_name="wapp_market_economic_dispatch.json",
             mime="application/json",
@@ -83,7 +83,7 @@ def render_projet7():
     st.markdown("---")
 
     # Dispatch Bar Chart
-    st.subheader("⚡ Merit Order & Ordre de Mérite des Centrales Dispatchées")
+    st.subheader("Merit Order & Ordre de Mérite des Centrales Dispatchées")
     
     fig_dispatch = px.bar(
         df_market,
@@ -99,7 +99,7 @@ def render_projet7():
     st.plotly_chart(fig_dispatch, use_container_width=True)
 
     # Nodal Pricing Chart
-    st.subheader("💲 Prix Marginaux Nodiaux (LMP $/MWh) par Zone de Réseau")
+    st.subheader("Prix Marginaux Nodiaux (LMP $/MWh) par Zone de Réseau")
     fig_lmp = px.line(
         df_market,
         x='node',
@@ -110,7 +110,7 @@ def render_projet7():
     )
     st.plotly_chart(fig_lmp, use_container_width=True)
 
-    st.subheader("📋 Résultat détaillé des Offres & Dispatching du Marché WAPP")
+    st.subheader("Résultat détaillé des Offres & Dispatching du Marché WAPP")
     st.dataframe(df_market[['node', 'filiere', 'capacity_mw', 'marginal_cost_usd_mwh', 'dispatched_mw', 'unit_load_pct', 'nodal_lmp_usd_mwh']], use_container_width=True)
 
 if __name__ == "__main__":

@@ -23,16 +23,16 @@ except ImportError:
     from projet8_iot_electronics_sensor.sensor_signal_processing import generate_sensor_vibration_signal, compute_fft_spectrum
 
 def render_projet8():
-    st.header("🔬 Projet 8 : Industrial IoT, Capteurs Électroniques & Traitement de Signal (FFT & RUL)")
+    st.header("Projet 8 : Industrial IoT, Capteurs Électroniques & Traitement de Signal (FFT & RUL)")
     
     st.info("""
-    🔗 **Source & Accès aux Données Utilisées (Benchmark NASA PCoE & Capteurs Haute Fréquence) :**
+    **Source & Accès aux Données Utilisées (Benchmark NASA PCoE & Capteurs Haute Fréquence) :**
     - **Fournisseurs Officiels :** NASA Prognostics Center of Excellence (*PCoE*) & IMS (*Center for Intelligent Maintenance Systems*)
     - **Jeu de données :** *Capteurs accélérométriques haute fréquence (1 à 2 kHz) pour l'analyse vibratoire, détection de défauts par FFT et estimation de la RUL*
     - **Liens officiels directs :**
-      - 🌐 [NASA PCoE Prognostics Data Repository](https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/)
-      - 🏛️ [Portail Open Data NASA (data.nasa.gov)](https://data.nasa.gov/)
-      - ⚙️ [Jeu de données NASA Bearing Vibration Dataset](https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/bearing-dataset/)
+      - [NASA PCoE Prognostics Data Repository](https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/)
+      - [Portail Open Data NASA (data.nasa.gov)](https://data.nasa.gov/)
+      - [Jeu de données NASA Bearing Vibration Dataset](https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/bearing-dataset/)
     - **Type d'accès :** Open Data Public Capteurs Industriels / Maintenance Prédictive.
     """)
 
@@ -43,7 +43,7 @@ def render_projet8():
     - Estimation de la Durée de Vie Utile Restante (**RUL - Remaining Useful Life**) des équipements industriels.
     """)
 
-    st.subheader("🎛️ Simulation du Signal Capteur IoT & Niveau de Dégradation")
+    st.subheader("Simulation du Signal Capteur IoT & Niveau de Dégradation")
 
     col_anom, col_rate = st.columns(2)
     with col_anom:
@@ -60,7 +60,7 @@ def render_projet8():
     col_dl1, col_dl2 = st.columns(2)
     with col_dl1:
         st.download_button(
-            "📥 Télécharger le signal temporel capteur (.CSV)",
+            "Télécharger le signal temporel capteur (.CSV)",
             data=df_raw_signal.to_csv(index=False).encode('utf-8'),
             file_name="iot_sensor_raw_vibration.csv",
             mime="text/csv",
@@ -68,7 +68,7 @@ def render_projet8():
         )
     with col_dl2:
         st.download_button(
-            "📥 Télécharger le spectre FFT (.JSON)",
+            "Télécharger le spectre FFT (.JSON)",
             data=df_spec.to_json(orient="records").encode('utf-8'),
             file_name="iot_sensor_fft_spectrum.json",
             mime="application/json",
@@ -89,17 +89,17 @@ def render_projet8():
     col_time, col_fft = st.columns(2)
 
     with col_time:
-        st.subheader("📈 Signal Temporel du Capteur (Accéléromètre)")
+        st.subheader("Signal Temporel du Capteur (Accéléromètre)")
         df_time = pd.DataFrame({"Temps_s": t, "Amplitude_Signal": signal})
         fig_time = px.line(df_time, x='Temps_s', y='Amplitude_Signal', title="Oscillogramme Brut du Capteur", color_discrete_sequence=['#1E3A8A'])
         st.plotly_chart(fig_time, use_container_width=True)
 
     with col_fft:
-        st.subheader("📉 Spectre de Fréquence FFT (Transformée de Fourier)")
+        st.subheader("Spectre de Fréquence FFT (Transformée de Fourier)")
         fig_fft = px.bar(df_spec, x='frequence_hz', y='amplitude', title="Spectre d'Amplitude (Détection d'Harmoniques à 350 Hz)", color='amplitude', color_continuous_scale='Teal')
         st.plotly_chart(fig_fft, use_container_width=True)
 
-    st.subheader("📋 Analyse des Harmoniques Détectées")
+    st.subheader("Analyse des Harmoniques Détectées")
     st.dataframe(df_spec.sort_values("amplitude", ascending=False).head(10), use_container_width=True)
 
 if __name__ == "__main__":

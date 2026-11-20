@@ -25,16 +25,16 @@ except ImportError:
     from projet5_geospatial_solar.geostat_kriging import GeostatisticalSolarModel
 
 def render_projet5():
-    st.header("🌍 Projet 5 : Ingestion Géospatiale Satellite & Modélisation Géostatistique (BME / Krigeage)")
+    st.header("Projet 5 : Ingestion Géospatiale Satellite & Modélisation Géostatistique (BME / Krigeage)")
     
     st.info("""
-    🔗 **Source & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
+    **Source & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
     - **Fournisseur Officiel :** NASA Langley Research Center (*NASA POWER - Prediction Of Worldwide Energy Resources*)
     - **Jeu de données :** *Rayonnement solaire satellitaire (GHI, DNI, Température, Vent) pour les sites stratégiques WAPP / CEDEAO*
     - **Liens officiels directs :**
-      - 🌐 [Portail Officiel NASA POWER Project](https://power.larc.nasa.gov/)
-      - 🛰️ [NASA POWER Data Access Viewer (Visualiseur & Export Mondial)](https://power.larc.nasa.gov/data-access-viewer/)
-      - 🔌 [Documentation & Endpoint API REST Direct (JSON)](https://power.larc.nasa.gov/docs/services/api/)
+      - [Portail Officiel NASA POWER Project](https://power.larc.nasa.gov/)
+      - [NASA POWER Data Access Viewer (Visualiseur & Export Mondial)](https://power.larc.nasa.gov/data-access-viewer/)
+      - [Documentation & Endpoint API REST Direct (JSON)](https://power.larc.nasa.gov/docs/services/api/)
     - **Type d'accès :** API REST Publique Mondiale NASA (Gratuit, Open Access sans clé requise).
     """)
 
@@ -51,7 +51,7 @@ def render_projet5():
     col_dl1, col_dl2 = st.columns(2)
     with col_dl1:
         st.download_button(
-            "📥 Télécharger le maillage solaire CEDEAO (.CSV)",
+            "Télécharger le maillage solaire CEDEAO (.CSV)",
             data=df_solar.to_csv(index=False).encode('utf-8'),
             file_name="wapp_potentiel_solaire_cedeao.csv",
             mime="text/csv",
@@ -59,7 +59,7 @@ def render_projet5():
         )
     with col_dl2:
         st.download_button(
-            "📥 Télécharger le maillage (.JSON)",
+            "Télécharger le maillage (.JSON)",
             data=df_solar.to_json(orient="records").encode('utf-8'),
             file_name="wapp_potentiel_solaire_cedeao.json",
             mime="application/json",
@@ -67,7 +67,7 @@ def render_projet5():
         )
 
     # Key metrics
-    st.subheader("📌 Métriques Géospatiales du Réseau Solaire WAPP")
+    st.subheader("Métriques Géospatiales du Réseau Solaire WAPP")
     m1, m2, m3, m4 = st.columns(4)
     m1.metric("Nombre de Stations", f"{len(df_solar)}")
     m2.metric("GHI Moyen CEDEAO", f"{df_solar['ghi_kwh_m2_day'].mean():.2f} kWh/m²/j")
@@ -76,11 +76,11 @@ def render_projet5():
 
     st.markdown("---")
 
-    tab_geo, tab_live = st.tabs(["🗺️ Cartographie Géostatistique Régionale (WAPP)", "🛰️ Extraction en Direct API NASA POWER (Par Station)"])
+    tab_geo, tab_live = st.tabs(["Cartographie Géostatistique Régionale (WAPP)", "Extraction en Direct API NASA POWER (Par Station)"])
 
     with tab_geo:
         # Spatial Map
-        st.subheader("🗺️ Carte Interactive du GHI (Irradiance Solaire) & Potentiel de Production MW")
+        st.subheader("Carte Interactive du GHI (Irradiance Solaire) & Potentiel de Production MW")
         
         fig_map = px.scatter_geo(
             df_solar,
@@ -107,7 +107,7 @@ def render_projet5():
         col_vario, col_interp = st.columns(2)
 
         with col_vario:
-            st.subheader("📉 Modélisation du Variogramme Spatial γ(h)")
+            st.subheader("Modélisation du Variogramme Spatial γ(h)")
             coords = df_solar[['longitude', 'latitude']].values
             values = df_solar['ghi_kwh_m2_day'].values
             
@@ -126,7 +126,7 @@ def render_projet5():
             st.plotly_chart(fig_vario, use_container_width=True)
 
         with col_interp:
-            st.subheader("🔥 Grid Heatmap Interpolé par Krigeage / IDW")
+            st.subheader("Grid Heatmap Interpolé par Krigeage / IDW")
             grid_x = np.linspace(df_solar['longitude'].min() - 1, df_solar['longitude'].max() + 1, 25)
             grid_y = np.linspace(df_solar['latitude'].min() - 1, df_solar['latitude'].max() + 1, 25)
             grid_z = geo_model.inverse_distance_weighting(coords, values, grid_x, grid_y)
@@ -142,11 +142,11 @@ def render_projet5():
             )
             st.plotly_chart(fig_heatmap, use_container_width=True)
 
-        st.subheader("📋 Tableau des Stations Météo Satellitaires NASA POWER")
+        st.subheader("Tableau des Stations Météo Satellitaires NASA POWER")
         st.dataframe(df_solar, use_container_width=True)
 
     with tab_live:
-        st.subheader("🛰️ Requête en Temps Réel sur les Serveurs Satellitaires NASA POWER (Langley)")
+        st.subheader("Requête en Temps Réel sur les Serveurs Satellitaires NASA POWER (Langley)")
         col_st, col_dt = st.columns(2)
         with col_st:
             station_names = df_solar['site'].tolist()
@@ -167,12 +167,12 @@ def render_projet5():
         else:
             s_date, e_date = "20230101", "20231231"
 
-        if st.button(f"🚀 Interroger l'API NASA POWER pour {chosen_site} ({st_lat}°, {st_lon}°)", key="btn_nasa_live"):
+        if st.button(f"Interroger l'API NASA POWER pour {chosen_site} ({st_lat}°, {st_lon}°)", key="btn_nasa_live"):
             with st.spinner("Téléchargement des données satellites depuis l'API NASA POWER..."):
                 df_live_nasa = fetch_nasa_power_point(lat=st_lat, lon=st_lon, start_date=s_date, end_date=e_date)
             
             if not df_live_nasa.empty:
-                st.success(f"✅ {len(df_live_nasa)} relevés quotidiens reçus de la NASA pour {chosen_site} !")
+                st.success(f"{len(df_live_nasa)} relevés quotidiens reçus de la NASA pour {chosen_site}.")
                 
                 m1, m2, m3 = st.columns(3)
                 m1.metric("Irradiance Solaire Moyenne", f"{df_live_nasa['ghi_kwh_m2'].mean():.2f} kWh/m²/j")

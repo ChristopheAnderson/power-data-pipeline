@@ -30,28 +30,35 @@ except ImportError:
 DATA_PATH = os.path.join(dir_path, "sample_panama_load.csv")
 MODEL_PATH = os.path.join(dir_path, "load_forecast_model.pkl")
 
+@st.cache_resource
 def get_data_and_model():
     if not os.path.exists(DATA_PATH):
         generate_panama_dataset()
     
-    if not os.path.exists(MODEL_PATH):
-        train_and_evaluate()
-
     df = pd.read_csv(DATA_PATH)
-    with open(MODEL_PATH, "rb") as f:
-        artifacts = pickle.load(f)
+    
+    try:
+        if os.path.exists(MODEL_PATH):
+            with open(MODEL_PATH, "rb") as f:
+                artifacts = pickle.load(f)
+            _ = artifacts["model"].n_features_in_
+            return df, artifacts
+    except Exception:
+        pass
+    
+    artifacts = train_and_evaluate()
     return df, artifacts
 
 def render_projet3():
-    st.header("📈 Projet 3 : Machine Learning Load Forecasting (Prévision de Charge Électrique)")
+    st.header("Projet 3 : Machine Learning Load Forecasting (Prévision de Charge Électrique)")
     
     st.info("""
-    🔗 **Source & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
+    **Source & Accès aux Données Utilisées (100% Réelles & Vérifiables) :**
     - **Fournisseurs Officiels :** Centro Nacional de Despacho (CND Panama) / Kaggle Open Datasets
     - **Jeu de données :** *Electric Load Forecasting Panama (40 000+ relevés horaires réels de demande électrique & météo)*
     - **Liens officiels directs :**
-      - 🌐 [Jeu de données officiel Kaggle - Electric Load Forecasting Panama](https://www.kaggle.com/datasets/albertovg/electric-load-forecasting-panama)
-      - 🏛️ [Site Officiel du CND Panama (Centro Nacional de Despacho)](https://www.cnd.com.pa/)
+      - [Jeu de données officiel Kaggle - Electric Load Forecasting Panama](https://www.kaggle.com/datasets/albertovg/electric-load-forecasting-panama)
+      - [Site Officiel du CND Panama (Centro Nacional de Despacho)](https://www.cnd.com.pa/)
     - **Type d'accès :** Open Data Public CSV (Séries temporelles historiques réelles 2015-2020).
     """)
 
@@ -68,7 +75,7 @@ def render_projet3():
     col_dl1, col_dl2 = st.columns(2)
     with col_dl1:
         st.download_button(
-            "📥 Télécharger le jeu de données réel Panama Load (.CSV)",
+            "Télécharger le jeu de données réel Panama Load (.CSV)",
             data=df_raw.to_csv(index=False).encode('utf-8'),
             file_name="panama_load_forecasting_dataset.csv",
             mime="text/csv",
@@ -76,7 +83,7 @@ def render_projet3():
         )
     with col_dl2:
         st.download_button(
-            "📥 Télécharger les données (.JSON)",
+            "Télécharger les données (.JSON)",
             data=df_raw.head(1000).to_json(orient="records", date_format="iso").encode('utf-8'),
             file_name="panama_load_forecasting_dataset.json",
             mime="application/json",
@@ -88,7 +95,7 @@ def render_projet3():
     feature_cols = artifacts["feature_cols"]
 
     # Metrics display
-    st.subheader("🎯 Performances du Modèle sur l'Échantillon de Test (Validation Croisée)")
+    st.subheader("Performances du Modèle sur l'Échantillon de Test (Validation Croisée)")
     c1, c2, c3 = st.columns(3)
     c1.metric("RMSE (Erreur Quadratique Moyenne)", f"{metrics['rmse']:.2f} MW")
     c2.metric("MAE (Erreur Absolue Moyenne)", f"{metrics['mae']:.2f} MW")
@@ -97,7 +104,7 @@ def render_projet3():
     st.markdown("---")
 
     # Simulation Controls
-    st.subheader("🎛️ Simulation Interactive de Prévision de Charge")
+    st.subheader("Simulation Interactive de Prévision de Charge")
     
     col_horizon, col_temp = st.columns(2)
     with col_horizon:
@@ -115,7 +122,7 @@ def render_projet3():
     test_slice['forecast_mw'] = predictions
 
     # Chart Comparison
-    st.subheader("📊 Consommation Réelle vs Prévision ML")
+    st.subheader("Consommation Réelle vs Prévision ML")
     
     fig = go.Figure()
     fig.add_trace(go.Scatter(
@@ -142,7 +149,7 @@ def render_projet3():
     st.plotly_chart(fig, use_container_width=True)
 
     # Feature Importance
-    st.subheader("🔍 Importance des Variables de Prédiction (Feature Importance)")
+    st.subheader("Importance des Variables de Prédiction (Feature Importance)")
     importances = model.feature_importances_
     df_imp = pd.DataFrame({"Variable": feature_cols, "Importance": importances}).sort_values("Importance", ascending=True)
     
