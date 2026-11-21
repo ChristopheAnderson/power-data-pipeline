@@ -1,0 +1,2 @@
+# Ignorer requirements.txt pour le builder Vercel (évite l'erreur de fonction Serverless Python)
+requirements.txt

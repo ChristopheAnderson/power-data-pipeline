@@ -1,0 +1,10 @@
+{
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://power-data-pipeline-bqhbx2x3rta7odtqusg8bb.streamlit.app/$1",
+      "permanent": false
+    }
+  ]
+}
