@@ -1,2 +1,5 @@
-# Ignorer requirements.txt pour le builder Vercel (évite l'erreur de fonction Serverless Python)
+# Ignorer les fichiers Python pour le builder Vercel
+# Vercel déploie alors index.html et vercel.json en tant que site statique avec redirection Edge instantanée
 requirements.txt
+app.py
+*.py

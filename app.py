@@ -1,8 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-Point d'entrée alternatif : streamlit run app.py
+Point d'entrée compatible Streamlit et Vercel
 """
-import os, sys
-sys.path.append(os.path.dirname(__file__))
+def app(environ, start_response):
+    path = environ.get('PATH_INFO', '')
+    target = f"https://power-data-pipeline-bqhbx2x3rta7odtqusg8bb.streamlit.app{path}"
+    start_response('302 Found', [('Location', target), ('Content-Type', 'text/plain')])
+    return [b"Redirecting to Streamlit Cloud..."]
 
-import streamlit_app
+application = app
+handler = app
+
+if __name__ == "__main__":
+    import os, sys
+    os.system(f"{sys.executable} -m streamlit run streamlit_app.py")
