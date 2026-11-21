@@ -2,17 +2,53 @@ name: Keep Streamlit Apps Awake
 
 on:
   schedule:
-    - cron: '0 */4 * * *'
+    - cron: '17 */6 * * *'
   workflow_dispatch:
 
 jobs:
   keep-alive:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - name: Wake up Streamlit apps
-        uses: gpenessot/streamlit-keep-alive@v1
+      - uses: actions/setup-python@v5
         with:
-          app-urls: |
-            https://data-analytics-bi-portfolio-ek57rbdepycxrx94gjvdv8.streamlit.app/
+          python-version: '3.12'
+
+      - name: Install Playwright (Chromium)
+        run: |
+          pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Wake up Streamlit apps
+        env:
+          APP_URLS: |
             https://power-data-pipeline-bqhbx2x3rta7odtqusg8bb.streamlit.app/
-          timeout: 120
+            https://data-analytics-bi-portfolio-ek57rbdepycxrx94gjvdv8.streamlit.app/
+        shell: python
+        run: |
+          import os, sys
+          from playwright.sync_api import sync_playwright
+
+          urls = [u.strip() for u in os.environ["APP_URLS"].splitlines() if u.strip()]
+          failures = 0
+          with sync_playwright() as p:
+              browser = p.chromium.launch()
+              for url in urls:
+                  page = browser.new_page()
+                  try:
+                      page.goto(url, wait_until="domcontentloaded", timeout=90_000)
+                      page.wait_for_timeout(8_000)
+                      btn = page.get_by_role("button", name="Yes, get this app back up!")
+                      if btn.count() > 0:
+                          print(f"[SLEEPING] {url} -> réveil demandé")
+                          btn.first.click()
+                          page.wait_for_timeout(60_000)
+                      else:
+                          print(f"[AWAKE] {url}")
+                  except Exception as e:
+                      failures += 1
+                      print(f"[ERROR] {url}: {e}")
+                  finally:
+                      page.close()
+              browser.close()
+          sys.exit(1 if failures == len(urls) else 0)
