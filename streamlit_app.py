@@ -20,6 +20,8 @@ from projet10_logistics_supply_chain.logistics_supply_app import render_projet10
 from projet11_climate_agriculture.climate_dashboard import render_projet11
 from projet12_health_demographics.health_demographics_dashboard import render_projet12
 from projet13_economy_development.economy_development_dashboard import render_projet13
+from projet14_telecom_churn_mining.telecom_app import render_projet14
+from projet15_telecom_nlp_fraud.nlp_fraud_app import render_projet15
 
 st.set_page_config(
     page_title="Power Grid & Multi-Sector Data Engineering Platform",
@@ -119,6 +121,7 @@ st.sidebar.markdown(
 st.sidebar.title("PowerGrid & Data Suite")
 st.sidebar.markdown("**Christophe WAVOEKE**  \nIngénieur Modélisation & Data Systems")
 st.sidebar.markdown("---")
+st.sidebar.caption("Télécommunications & Data Mining")
 st.sidebar.caption("Énergie & Réseaux Électriques")
 st.sidebar.caption("Big Data & Multi-Secteurs")
 st.sidebar.caption("Données & Indicateurs Régionaux")
@@ -185,6 +188,9 @@ PAGES = {
     "P11 : Climat & Précipitations (Open-Meteo API)": render_projet11,
     "P12 : Santé & Démographie (WHO GHO + World Bank)": render_projet12,
     "P13 : Économie & Développement (World Bank API)": render_projet13,
+    # --- TÉLÉCOMMUNICATIONS & DATA MINING ---
+    "P14 : Télécom Churn & Ingestion CDR": render_projet14,
+    "P15 : Télécom NLP Réclamations & Fraude MoMo": render_projet15,
 }
 
 default_index = 0
@@ -207,15 +213,19 @@ if menu == "Vue d'ensemble de la Plateforme":
     st.subheader("Architecture de Traitement, Big Data, Streaming SCADA & Optimisation Énergétique")
 
     st.markdown("""
-    Cette suite applicative intègre **13 pipelines de données et modules d'analyse avancée** en production,
-    couvrant la **gestion des réseaux électriques interconnectés**, le **Big Data**, les **flux IoT / Télémétrie**,
-    la **FinTech**, la **Logistique** et les **indicateurs socio-économiques régionaux**.
+    Cette suite applicative intègre **15 pipelines de données et modules d'analyse avancée** en production,
+    couvrant le **secteur des Télécommunications**, la **gestion des réseaux électriques interconnectés**, le **Big Data**,
+    les **flux IoT / Télémétrie**, la **FinTech**, la **Logistique** et les **indicateurs socio-économiques régionaux**.
     """)
 
     st.info("**Curriculum Vitæ Exécutif :** Consultez l'onglet **Curriculum Vitæ (CV Exécutif)** dans le menu latéral pour visualiser le profil complet en format interactif ou télécharger le PDF officiel 2 pages.")
 
 
     categories = {
+        "TÉLÉCOMMUNICATIONS & DATA MINING (P14–P15)": [
+            "**P14** · Télécom Churn & Ingestion CDR — *Pipeline ETL d'usage réseau (voix, data, SMS), Machine Learning comparatif (Gradient Boosting/Random Forest/LogReg), explicabilité des facteurs de départ et simulateur financier de ROI de rétention.*",
+            "**P15** · NLP Réclamations & Fraude Mobile Money — *Traitement de données textuelles non structurées (TF-IDF, Topic Modeling NMF, Sentiment Analysis) et détection d'anomalies financières MoMo non-supervisée (Isolation Forest).*",
+        ],
         "ÉNERGIE & RÉSEAU (P1–P7)": [
             "**P1** · API RTE éCO2mix Temps Réel — [Données Open Data Réseaux Énergies (ODRE)](https://opendata.reseaux-energies.fr/explore/dataset/eco2mix-national-tr/information/) | *Téléchargeable en direct (.CSV / .JSON) sur la sous-page*",
             "**P2** · Gouvernance & Qualité des Données GRT WAPP — [Portail WAPP](https://ecowapp.org/) & [Banque Mondiale Énergie](https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS) | *Téléchargeable en direct (.CSV / .JSON)*",
